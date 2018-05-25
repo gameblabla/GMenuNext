@@ -10,6 +10,14 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
+**2018.XX.XX
+- Fix bug when returning to GMenuNext;
+- Fix bug with Select combo key triggering context menu;
+- Add new Volume slider control (SELECT + L): Now you can control volume via software and hardware;
+- Manual files auto load on boot, if exists;
+- Use the same app backdrop in Manual reader;
+
+
 **2018.05.22** (*Codename: Zeraora.*)
 * Improved loop timers in main thread and dialogs:
 	* Enable SDL_AddTimer for RS97;
