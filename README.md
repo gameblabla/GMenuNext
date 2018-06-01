@@ -10,13 +10,23 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
-**2018.XX.XX
-- Fix bug when returning to GMenuNext;
-- Fix bug with Select combo key triggering context menu;
-- Add new Volume slider control (SELECT + L): Now you can control volume via software and hardware;
-- Manual files auto load on boot, if exists;
-- Use the same app backdrop in Manual reader;
-
+**2018.XX.XX** (*Codename: McFly.*)
+* New Date & Time settings:
+	* Allow to set system's date and time (works until reboot);
+* Fix bug when returning from app/emu to GMenuNext;
+* Fix bug with Select combo key triggering context menu;
+* Add new Volume slider control (SELECT + L):
+	* Now you can control volume via software and hardware;
+* Auto load available Manual files on start;
+* Use the same app backdrop in Manual reader;
+* Save Last Selection properly remember latest Section and Link;
+* Updated some translatable text strings;
+* Support loading and converting ancient skin files with separated RGBA components;
+* Search for icon/backdrop/manual named as app linkname and foldername;
+* Live skin:
+	* Auto update layout and spacing on change;
+	* Auto update font color and size on change;
+* Batch of internal changes and bug fixes.
 
 **2018.05.22** (*Codename: Zeraora.*)
 * Improved loop timers in main thread and dialogs:
