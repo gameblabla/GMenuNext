@@ -26,6 +26,7 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 * Live skin:
 	* Auto update layout and spacing on change;
 	* Auto update font color and size on change;
+* Allow set CPU clock values between 210 and 642 MHz (safe range);
 * Batch of internal changes and bug fixes.
 
 **2018.05.22** (*Codename: Zeraora.*)
