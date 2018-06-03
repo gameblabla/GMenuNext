@@ -10,7 +10,7 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
-**2018.XX.XX** (*Codename: McFly.*)
+**2018.06.03** (*Codename: McFly.*)
 * New Date & Time settings:
 	* Allow to set system's date and time (works until reboot);
 * Fix bug when returning from app/emu to GMenuNext;
@@ -27,6 +27,8 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 	* Auto update layout and spacing on change;
 	* Auto update font color and size on change;
 * Allow set CPU clock values between 210 and 642 MHz (safe range);
+* New lightweight font
+* Adjusts in titlebar text position
 * Batch of internal changes and bug fixes.
 
 **2018.05.22** (*Codename: Zeraora.*)
