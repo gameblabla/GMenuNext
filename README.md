@@ -27,9 +27,10 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 	* Auto update layout and spacing on change;
 	* Auto update font color and size on change;
 * Allow set CPU clock values between 210 and 642 MHz (safe range);
-* New lightweight font
-* Adjusts in titlebar text position
-* Add Korean translation, thanks to [@haven-jeon](https://github.com/haven-jeon).
+* New lightweight font;
+* New button input routine - try to improve button presses and repeats;
+* Adjusts in titlebar text position;
+* Add Korean translation, thanks to [@haven-jeon](https://github.com/haven-jeon);
 * Batch of internal changes and bug fixes.
 
 **2018.05.22** (*Codename: Zeraora.*)
