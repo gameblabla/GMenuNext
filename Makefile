@@ -54,7 +54,7 @@ dist: dir shared
 	cp -RH assets/skins assets/translations $(DISTDIR)
 	# cp -RH assets/$(TARGET)/BlackJeans.png $(DISTDIR)/skins/Default/wallpapers
 	# cp -RH assets/$(TARGET)/skin.conf $(DISTDIR)/skins/Default
-	# cp -RH assets/$(TARGET)/font.ttf $(DISTDIR)/skins/Default
+	cp -RH assets/$(TARGET)/font.ttf $(DISTDIR)/skins/Default
 	# cp -RH assets/$(TARGET)/gmenu2x.conf $(DISTDIR)
 	cp -RH assets/$(TARGET)/icons/* $(DISTDIR)/skins/Default/icons/
 	# cp -RH assets/$(TARGET)/emulators/* $(DISTDIR)/sections/emulators/
