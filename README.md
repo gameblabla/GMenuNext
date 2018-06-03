@@ -29,6 +29,7 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 * Allow set CPU clock values between 210 and 642 MHz (safe range);
 * New lightweight font
 * Adjusts in titlebar text position
+* Add Korean translation, thanks to [@haven-jeon](https://github.com/haven-jeon).
 * Batch of internal changes and bug fixes.
 
 **2018.05.22** (*Codename: Zeraora.*)
