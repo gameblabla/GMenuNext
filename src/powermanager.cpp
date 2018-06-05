@@ -49,11 +49,7 @@ void PowerManager::resetPowerTimer() {
 	powerTimer = SDL_AddTimer(this->powerTimeout * 60e3, doPowerOff, NULL);
 };
 
-void PowerManager::doRestart(bool showDialog = false) {
-};
-
-
-Uint32 PowerManager::doSuspend(unsigned int interval, void * param) {
+Uint32 PowerManager::doSuspend(unsigned int interval, void *param) {
 	if (interval > 0) {
 		MessageBox mb(PowerManager::instance->gmenu2x, PowerManager::instance->gmenu2x->tr["Suspend"]);
 		mb.setAutoHide(500);
@@ -75,7 +71,7 @@ Uint32 PowerManager::doSuspend(unsigned int interval, void * param) {
 	return interval;
 };
 
-Uint32 PowerManager::doPowerOff(unsigned int interval, void * param) {
+Uint32 PowerManager::doPowerOff(unsigned int interval, void *param) {
 	if (interval > 0) {
 #if !defined(TARGET_PC)
 		system("poweroff");
