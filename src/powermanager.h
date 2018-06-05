@@ -8,9 +8,11 @@ class PowerManager {
 public:
 	PowerManager(GMenu2X *gmenu2x, unsigned int suspendTimeout, unsigned int powerTimeout);
 	~PowerManager();
-	void clearTimeout();
-	void resetSuspendTimeout();
-	void resetPowerTimeout();
+	void setSuspendTimeout(unsigned int suspendTimeout);
+	void setPowerTimeout(unsigned int powerTimeout);
+	void clearTimer();
+	void resetSuspendTimer();
+	void resetPowerTimer();
 	void doRestart(bool showDialog);
 	// void resetScreenTimer();
 	// void doPoweroff(bool showDialog);
@@ -20,9 +22,11 @@ public:
 	bool suspendActive;
 	SDL_TimerID powerTimer; // = NULL;
 
+
+
 private:
-	unsigned int suspendTimeout, powerTimeout;
 	GMenu2X *gmenu2x;
+	unsigned int suspendTimeout, powerTimeout;
 
 	// void addScreenTimer();
 	// void removeScreenTimer();
