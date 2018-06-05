@@ -2507,19 +2507,20 @@ string GMenu2X::getDiskFree(const char *path) {
 }
 
 int GMenu2X::drawButton(Button *btn, int x, int y) {
-	// if (y < 0) y = resY+y;
-	y = resY - 8 - skinConfInt["bottomBarHeight"] / 2;
-	btn->setPosition(x, y);
+	if (y < 0) y = resY+y;
+	// y = resY - 8 - skinConfInt["bottomBarHeight"] / 2;
+	btn->setPosition(x, y - 7);
 	btn->paint();
 	return x + btn->getRect().w + 6;
 }
 
 int GMenu2X::drawButton(Surface *s, const string &btn, const string &text, int x, int y) {
-	// if (y < 0) y = resY + y;
-	SDL_Rect re = {x, resY - skinConfInt["bottomBarHeight"] / 2, 0, 16};
+	if (y < 0) y = resY + y;
+	// y = resY - skinConfInt["bottomBarHeight"] / 2;
+	SDL_Rect re = {x, y, 0, 16};
 
 	if (sc.skinRes("imgs/buttons/"+btn+".png") != NULL) {
-		sc["imgs/buttons/"+btn+".png"]->blitCenter(s, re.x + 8, re.y);
+		sc["imgs/buttons/"+btn+".png"]->blitCenter(s, re.x + 8, re.y + 2);
 		re.w = sc["imgs/buttons/"+btn+".png"]->raw->w + 3;
 
 		s->write(font, text, re.x + re.w, re.y, HAlignLeft, VAlignMiddle, skinConfColors[COLOR_FONT_ALT], skinConfColors[COLOR_FONT_ALT_OUTLINE]);
@@ -2529,11 +2530,11 @@ int GMenu2X::drawButton(Surface *s, const string &btn, const string &text, int x
 }
 
 int GMenu2X::drawButtonRight(Surface *s, const string &btn, const string &text, int x, int y) {
-	// if (y < 0) y = resY + y;
-	y = resY - skinConfInt["bottomBarHeight"] / 2;
+	if (y < 0) y = resY + y;
+	// y = resY - skinConfInt["bottomBarHeight"] / 2;
 	if (sc.skinRes("imgs/buttons/"+btn+".png") != NULL) {
 		x -= 16;
-		sc["imgs/buttons/"+btn+".png"]->blitCenter(s, x + 8, y);
+		sc["imgs/buttons/"+btn+".png"]->blitCenter(s, x + 8, y + 2);
 		x -= 3;
 		s->write(font, text, x, y, HAlignRight, VAlignMiddle, skinConfColors[COLOR_FONT_ALT], skinConfColors[COLOR_FONT_ALT_OUTLINE]);
 		return x - 6 - font->getTextWidth(text);

@@ -10,6 +10,18 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
+**2018.06.XX** (*Codename: UUDDLRLRBA.*)
+* Settings allow to change Section Bar position;
+* Change CPU clock values safe range to 252~642MHz;
+	* Allow to set max/min/default CPU clock values by editing gmenu2x.conf;
+* New class PowerManager;
+	* Use of SDL_AddTimer to manage Suspend and Poweroff;
+	* Get rid of maths with SDL_GetTicks;
+* Optimize button press and repeat detection ;
+	* Fine tune button timings;
+* Rework Link Scanner dialog;
+* Fix Text Viewer dialog top position;
+
 **2018.06.03** (*Codename: McFly.*)
 * New Date & Time settings:
 	* Allow to set system's date and time (works until reboot);
