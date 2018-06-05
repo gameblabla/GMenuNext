@@ -94,10 +94,10 @@ int MenuSettingInt::value() {
 }
 
 void MenuSettingInt::adjustInput() {
-	gmenu2x->input.setInterval(100, LEFT );
-	gmenu2x->input.setInterval(100, RIGHT );
-	gmenu2x->input.setInterval(100, DEC );
-	gmenu2x->input.setInterval(100, INC );
+	gmenu2x->input.setInterval(100, LEFT);
+	gmenu2x->input.setInterval(100, RIGHT);
+	gmenu2x->input.setInterval(100, DEC);
+	gmenu2x->input.setInterval(100, INC);
 }
 
 bool MenuSettingInt::edited() {

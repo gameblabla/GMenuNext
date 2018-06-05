@@ -133,7 +133,6 @@ void MenuSettingDateTime::setMinute(short int i) {
 	ss >> minute;
 }
 
-
 void MenuSettingDateTime::setSelPart(unsigned short int i) {
 	switch (selPart) {
 		case 1: setMonth(i); break;
@@ -147,9 +146,7 @@ void MenuSettingDateTime::setSelPart(unsigned short int i) {
 }
 
 string MenuSettingDateTime::value() {
-	// return *_value;
-return *_value;
-
+	return *_value;
 }
 
 unsigned short int MenuSettingDateTime::getSelPart() {
