@@ -82,7 +82,7 @@ Uint32 PowerManager::doPowerOff(unsigned int interval, void * param) {
 		return interval;
 	}
 
-	MessageBox mb(PowerManager::instance->gmenu2x, PowerManager::instance->gmenu2x->tr["   Poweroff or reboot the device?   "], "skin:icons/exit.png");
+	MessageBox mb(PowerManager::instance->gmenu2x, PowerManager::instance->gmenu2x->tr["Poweroff or reboot the device?"], "skin:icons/exit.png");
 	mb.setButton(SECTION_NEXT, PowerManager::instance->gmenu2x->tr["Reboot"]);
 	mb.setButton(CONFIRM, PowerManager::instance->gmenu2x->tr["Poweroff"]);
 	mb.setButton(CANCEL,  PowerManager::instance->gmenu2x->tr["Cancel"]);
