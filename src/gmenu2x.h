@@ -191,7 +191,6 @@ private:
 #elif defined(TARGET_RS97)
 	void umountSd();
 	void formatSd();
-	void setTVOut();
 	void checkUDC();
 #endif
 
@@ -289,6 +288,8 @@ public:
 	int getVolumeScaler();
 #endif
 
+	void setTVOut(string _TVOut);
+	string TVOut = "OFF";
 	void about();
 	void viewLog();
 	void batteryLogger();
