@@ -110,11 +110,8 @@ int Selector::exec(int startSelection) {
 	Surface *iconPreview = gmenu2x->sc.skinRes("imgs/preview.png");
 
 	gmenu2x->sc.defaultAlpha = false;
-	// gmenu2x->input.setWakeUpInterval(40); //25FPS
+	// gmenu2x->input.setWakeUpInterval(1); // refresh on load
 	while (!close) {
-		bool inputAction = gmenu2x->input.update();
-		if (gmenu2x->inputCommonActions(inputAction)) continue;
-
 		gmenu2x->bg->blit(gmenu2x->s,0,0);
 
 		if (selected>firstElement+numRows) firstElement=selected-numRows;
@@ -158,6 +155,9 @@ int Selector::exec(int startSelection) {
 		gmenu2x->drawScrollBar(numRows,fl.size(),firstElement, rect);
 		gmenu2x->s->flip();
 		
+		bool inputAction = gmenu2x->input.update();
+		if (gmenu2x->inputCommonActions(inputAction)) continue;
+
 		if ( gmenu2x->input[SETTINGS] ) {
 			close = true; result = false;
 		} else if ( gmenu2x->input[UP] ) {
