@@ -21,9 +21,7 @@
 #ifndef GMENU2X_H
 #define GMENU2X_H
 
-// #include "powermanager.h"
 class PowerManager;
-
 
 #include "surfacecollection.h"
 #include "iconbutton.h"
@@ -34,7 +32,6 @@ class PowerManager;
 #include "inputmanager.h"
 #include "surface.h"
 #include "fonthelper.h"
-
 
 #include <iostream>
 #include <string>
@@ -121,9 +118,6 @@ class GMenu2X {
 private:
 	int getBacklight();
 	int getVolume();
-
-	void setSuspend(bool suspend);
-	bool suspendActive = false;
 
 	string path; //!< Contains the working directory of GMenu2X
 	/*!
