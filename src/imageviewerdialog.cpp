@@ -6,7 +6,7 @@ ImageViewerDialog::ImageViewerDialog(GMenu2X *gmenu2x, const string &title, cons
 {}
 
 void ImageViewerDialog::exec() {
-	gmenu2x->initBG();
+	// gmenu2x->initBG();
 
 	Surface pngman(manual);
 
@@ -17,18 +17,18 @@ void ImageViewerDialog::exec() {
 
 	int offsetX = 0, offsetY = 0;
 
-	drawTopBar(gmenu2x->bg, title, description, icon);
+	drawTopBar(this->bg, title, description, icon);
 
-	drawBottomBar(gmenu2x->bg);
+	drawBottomBar(this->bg);
 
-	gmenu2x->drawButton(gmenu2x->bg, "right", gmenu2x->tr["Pan"],
-	gmenu2x->drawButton(gmenu2x->bg, "down", "",
-	gmenu2x->drawButton(gmenu2x->bg, "up", "",
-	gmenu2x->drawButton(gmenu2x->bg, "left", "",
-	gmenu2x->drawButton(gmenu2x->bg, "start", gmenu2x->tr["Exit"],
+	gmenu2x->drawButton(this->bg, "right", gmenu2x->tr["Pan"],
+	gmenu2x->drawButton(this->bg, "down", "",
+	gmenu2x->drawButton(this->bg, "up", "",
+	gmenu2x->drawButton(this->bg, "left", "",
+	gmenu2x->drawButton(this->bg, "start", gmenu2x->tr["Exit"],
 	5))-12)-14)-12);
 
-	gmenu2x->bg->blit(gmenu2x->s, 0, 0);
+	this->bg->blit(gmenu2x->s, 0, 0);
 
 	gmenu2x->s->setClipRect(gmenu2x->listRect);
 
@@ -38,7 +38,7 @@ void ImageViewerDialog::exec() {
 		if (gmenu2x->inputCommonActions(inputAction)) { repaint = true; continue; };
 
 		if (repaint) {
-			gmenu2x->bg->blit(gmenu2x->s, 0, 0);
+			this->bg->blit(gmenu2x->s, 0, 0);
 			pngman.blit(gmenu2x->s, gmenu2x->listRect.x + offsetX, gmenu2x->listRect.y + offsetY);
 			gmenu2x->s->flip();
 			repaint = false;
