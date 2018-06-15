@@ -1444,9 +1444,9 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 }
 
 void GMenu2X::explorer() {
-	FileDialog fd(this,tr["Select an application"],".gpu,.gpe,.sh,", "", tr["Explorer"]);
+	FileDialog fd(this, tr["Select an application"], ".gpu,.gpe,.sh,", "", tr["Explorer"]);
 	if (fd.exec()) {
-		if (confInt["saveSelection"] && (confInt["section"]!=menu->selSectionIndex() || confInt["link"]!=menu->selLinkIndex()))
+		if (confInt["saveSelection"] && (confInt["section"] != menu->selSectionIndex() || confInt["link"] != menu->selLinkIndex()))
 			writeConfig();
 
 #if defined(TARGET_GP2X)
@@ -1455,12 +1455,12 @@ void GMenu2X::explorer() {
 #endif
 
 	//string command = cmdclean(fd.path()+"/"+fd.file) + "; sync & cd "+cmdclean(getExePath())+"; exec ./gmenu2x";
-		string command = cmdclean(fd.getPath()+"/"+fd.getFile());
+		string command = cmdclean(fd.getPath() + "/" + fd.getFile());
 		chdir(fd.getPath().c_str());
 		quit();
 		setCPU(confInt["cpuMenu"]);
 		setTVOut(TVOut);
-		execlp("/bin/sh","/bin/sh","-c",command.c_str(),NULL);
+		execlp("/bin/sh", "/bin/sh", "-c", command.c_str(), NULL);
 
 	//if execution continues then something went wrong and as we already called SDL_Quit we cannot continue
 	//try relaunching gmenu2x
@@ -1533,17 +1533,9 @@ void GMenu2X::settings() {
 	sd.addSetting(new MenuSettingInt(this,tr["Power timeout"], tr["Minutes to poweroff system if inactive"], &confInt["powerTimeout"], 10, 1, 300));
 	sd.addSetting(new MenuSettingInt(this,tr["Backlight"], tr["Set LCD backlight"], &confInt["backlight"], 70, 1, 100));
 	sd.addSetting(new MenuSettingInt(this, tr["Global volume"], tr["Set the default volume for the soundcard"], &confInt["globalVolume"], 60, 0, 100));
-	// sd.addSetting(new MenuSettingBool(this,tr["Show root"],tr["Show root folder in the file selection dialogs"],&showRootFolder));
+	// sd.addSetting(new MenuSettingBool(this,tr["Show root"], tr["Show root folder in the file selection dialogs"],&showRootFolder));
 
 	if (sd.exec() && sd.edited() && sd.save) {
-//G
-#if defined(TARGET_GP2X)
-		if (prevgamma != confInt["gamma"]) setGamma(confInt["gamma"]);
-		// if (fileExists("/mnt/root") && !showRootFolder)
-			// unlink("/mnt/root");
-		// else if (!fileExists("/mnt/root") && showRootFolder)
-			// symlink("/","/mnt/root");
-#endif
 
 		if (curMenuClock != confInt["cpuMenu"]) setCPU(confInt["cpuMenu"]);
 		if (curGlobalVolume != confInt["globalVolume"]) setVolume(confInt["globalVolume"]);
@@ -1569,7 +1561,14 @@ void GMenu2X::settings() {
 		powerManager->setPowerTimeout(confInt["powerTimeout"]);
 		powerManager->resetSuspendTimer();
 
-#if defined(TARGET_RS97)
+#if defined(TARGET_GP2X)
+//G
+		if (prevgamma != confInt["gamma"]) setGamma(confInt["gamma"]);
+		// if (fileExists("/mnt/root") && !showRootFolder)
+			// unlink("/mnt/root");
+		// else if (!fileExists("/mnt/root") && showRootFolder)
+			// symlink("/","/mnt/root");
+#elif defined(TARGET_RS97)
 		if (prevTVOut != TVOut) setTVOut(TVOut);
 		if (TVOut != "OFF") {
 			MessageBox mb(this, tr["TV-out enabled.\nContinue?"], "skin:icons/tv.png");
@@ -1616,7 +1615,7 @@ void GMenu2X::setDateTime() {
 	struct timeval newtime = { t, 0 };
 
 #if !defined(TARGET_PC)
-	settimeofday(&newtime,NULL);
+	settimeofday(&newtime, NULL);
 #endif
 }
 
@@ -1625,7 +1624,7 @@ uint GMenu2X::onChangeSkin() {
 }
 
 void GMenu2X::skinMenu() {
-	FileLister fl_sk("skins",true,false);
+	FileLister fl_sk("skins", true, false);
 	fl_sk.addExclude("..");
 	fl_sk.browse();
 	string curSkin = confStr["skin"];
@@ -1769,7 +1768,7 @@ void GMenu2X::umountSd() {
 	mb.setButton(CANCEL,  tr["No"]);
 	if (mb.exec() == CONFIRM) {
 		system("/usr/bin/umount_ext_sd.sh");
-		MessageBox mb(this,tr["Complete!"]);
+		MessageBox mb(this, tr["Complete!"]);
 		mb.exec();
 	}
 }
@@ -1785,7 +1784,7 @@ void GMenu2X::formatSd() {
 
 		system("/usr/bin/format_int_sd.sh");
 		{ // new mb scope
-			MessageBox mb(this,tr["Complete!"]);
+			MessageBox mb(this, tr["Complete!"]);
 			mb.setAutoHide(0);
 			mb.exec();
 		}
@@ -1946,7 +1945,7 @@ bool GMenu2X::saveScreenshot() {
 	stringstream ss;
 	string fname;
 	
-	mkdir("screenshots/",0777);
+	mkdir("screenshots/", 0777);
 
 	do {
 		x++;
@@ -1963,7 +1962,7 @@ bool GMenu2X::saveScreenshot() {
 }
 
 void GMenu2X::addLink() {
-	FileDialog fd(this,tr["Select an application"],"","",tr["File Dialog"]);
+	FileDialog fd(this, tr["Select an application"], "", "", tr["File Dialog"]);
 	if (fd.exec()) {
 		ledOn();
 		menu->addLink(fd.getPath(), fd.getFile());
@@ -2123,7 +2122,7 @@ void GMenu2X::addSection() {
 }
 
 void GMenu2X::renameSection() {
-	InputDialog id(this, ts, tr["Insert a new name for this section"],menu->selSection(),tr ["Rename section"], "skin:sections/" + menu->selSection() + ".png");
+	InputDialog id(this, ts, tr["Insert a new name for this section"],menu->selSection(), tr["Rename section"], "skin:sections/" + menu->selSection() + ".png");
 	if (id.exec()) {
 		//only if a section with the same name does not exist & !samename
 		if (menu->selSection() != id.getInput() && find(menu->getSections().begin(),menu->getSections().end(), id.getInput()) == menu->getSections().end()) {
@@ -2153,7 +2152,7 @@ void GMenu2X::renameSection() {
 }
 
 void GMenu2X::deleteSection() {
-	MessageBox mb(this,tr["All links in this section will be removed."]+"\n"+tr["Are you sure?"]);
+	MessageBox mb(this, tr["All links in this section will be removed."] + "\n" + tr["Are you sure?"]);
 	mb.setButton(CONFIRM, tr["Yes"]);
 	mb.setButton(CANCEL,  tr["No"]);
 	if (mb.exec() == CONFIRM) {
@@ -2561,17 +2560,17 @@ void GMenu2X::drawSlider(int val, int min, int max, Surface &icon, Surface &bg) 
 #if defined(TARGET_GP2X)
 void GMenu2X::settingsOpen2x() {
 	SettingsDialog sd(this, ts, tr["Open2x Settings"]);
-	sd.addSetting(new MenuSettingBool(this,tr["USB net on boot"],tr["Allow USB networking to be started at boot time"],&o2x_usb_net_on_boot));
-	sd.addSetting(new MenuSettingString(this,tr["USB net IP"],tr["IP address to be used for USB networking"],&o2x_usb_net_ip));
-	sd.addSetting(new MenuSettingBool(this,tr["Telnet on boot"],tr["Allow telnet to be started at boot time"],&o2x_telnet_on_boot));
-	sd.addSetting(new MenuSettingBool(this,tr["FTP on boot"],tr["Allow FTP to be started at boot time"],&o2x_ftp_on_boot));
-	sd.addSetting(new MenuSettingBool(this,tr["GP2XJOY on boot"],tr["Create a js0 device for GP2X controls"],&o2x_gp2xjoy_on_boot));
-	sd.addSetting(new MenuSettingBool(this,tr["USB host on boot"],tr["Allow USB host to be started at boot time"],&o2x_usb_host_on_boot));
-	sd.addSetting(new MenuSettingBool(this,tr["USB HID on boot"],tr["Allow USB HID to be started at boot time"],&o2x_usb_hid_on_boot));
-	sd.addSetting(new MenuSettingBool(this,tr["USB storage on boot"],tr["Allow USB storage to be started at boot time"],&o2x_usb_storage_on_boot));
-//sd.addSetting(new MenuSettingInt(this,tr["Speaker Mode on boot"],tr["Set Speaker mode. 0 = Mute, 1 = Phones, 2 = Speaker"],&volumeMode,0,2,1));
-	sd.addSetting(new MenuSettingInt(this,tr["Speaker Scaler"],tr["Set the Speaker Mode scaling 0-150\% (default is 100\%)"],&volumeScalerNormal,100, 0,150));
-	sd.addSetting(new MenuSettingInt(this,tr["Headphones Scaler"],tr["Set the Headphones Mode scaling 0-100\% (default is 65\%)"],&volumeScalerPhones,65, 0,100));
+	sd.addSetting(new MenuSettingBool(this, tr["USB net on boot"], tr["Allow USB networking to be started at boot time"],&o2x_usb_net_on_boot));
+	sd.addSetting(new MenuSettingString(this, tr["USB net IP"], tr["IP address to be used for USB networking"],&o2x_usb_net_ip));
+	sd.addSetting(new MenuSettingBool(this, tr["Telnet on boot"], tr["Allow telnet to be started at boot time"],&o2x_telnet_on_boot));
+	sd.addSetting(new MenuSettingBool(this, tr["FTP on boot"], tr["Allow FTP to be started at boot time"],&o2x_ftp_on_boot));
+	sd.addSetting(new MenuSettingBool(this, tr["GP2XJOY on boot"], tr["Create a js0 device for GP2X controls"],&o2x_gp2xjoy_on_boot));
+	sd.addSetting(new MenuSettingBool(this, tr["USB host on boot"], tr["Allow USB host to be started at boot time"],&o2x_usb_host_on_boot));
+	sd.addSetting(new MenuSettingBool(this, tr["USB HID on boot"], tr["Allow USB HID to be started at boot time"],&o2x_usb_hid_on_boot));
+	sd.addSetting(new MenuSettingBool(this, tr["USB storage on boot"], tr["Allow USB storage to be started at boot time"],&o2x_usb_storage_on_boot));
+//sd.addSetting(new MenuSettingInt(this, tr["Speaker Mode on boot"], tr["Set Speaker mode. 0 = Mute, 1 = Phones, 2 = Speaker"],&volumeMode,0,2,1));
+	sd.addSetting(new MenuSettingInt(this, tr["Speaker Scaler"], tr["Set the Speaker Mode scaling 0-150\% (default is 100\%)"],&volumeScalerNormal,100, 0,150));
+	sd.addSetting(new MenuSettingInt(this, tr["Headphones Scaler"], tr["Set the Headphones Mode scaling 0-100\% (default is 65\%)"],&volumeScalerPhones,65, 0,100));
 
 	if (sd.exec() && sd.edited()) {
 		writeConfigOpen2x();
@@ -2634,10 +2633,10 @@ void GMenu2X::writeConfigOpen2x() {
 
 void GMenu2X::activateSdUsb() {
 	if (usbnet) {
-		MessageBox mb(this,tr["Operation not permitted."]+"\n"+tr["You should disable Usb Networking to do this."]);
+		MessageBox mb(this, tr["Operation not permitted."]+"\n"+tr["You should disable Usb Networking to do this."]);
 		mb.exec();
 	} else {
-		MessageBox mb(this,tr["USB Enabled (SD)"],"skin:icons/usb.png");
+		MessageBox mb(this, tr["USB Enabled (SD)"],"skin:icons/usb.png");
 		mb.setButton(CONFIRM, tr["Turn off"]);
 		mb.exec();
 		system("scripts/usbon.sh nand");
@@ -2646,11 +2645,11 @@ void GMenu2X::activateSdUsb() {
 
 void GMenu2X::activateNandUsb() {
 	if (usbnet) {
-		MessageBox mb(this,tr["Operation not permitted."]+"\n"+tr["You should disable Usb Networking to do this."]);
+		MessageBox mb(this, tr["Operation not permitted."]+"\n"+tr["You should disable Usb Networking to do this."]);
 		mb.exec();
 	} else {
 		system("scripts/usbon.sh nand");
-		MessageBox mb(this,tr["USB Enabled (Nand)"],"skin:icons/usb.png");
+		MessageBox mb(this, tr["USB Enabled (Nand)"],"skin:icons/usb.png");
 		mb.setButton(CONFIRM, tr["Turn off"]);
 		mb.exec();
 		system("scripts/usboff.sh nand");
