@@ -435,8 +435,6 @@ GMenu2X::GMenu2X() {
 	initServices();
 	setGamma(confInt["gamma"]);
 	applyDefaultTimings();
-#elif defined(TARGET_RS97)
-	setTVOut(TVOut);
 #endif
 
 	// input.setWakeUpInterval(1000);
@@ -1460,7 +1458,6 @@ void GMenu2X::explorer() {
 		chdir(fd.getPath().c_str());
 		quit();
 		setCPU(confInt["cpuMenu"]);
-		setTVOut(TVOut);
 		execlp("/bin/sh", "/bin/sh", "-c", command.c_str(), NULL);
 
 	//if execution continues then something went wrong and as we already called SDL_Quit we cannot continue
@@ -2312,6 +2309,7 @@ void GMenu2X::setCPU(unsigned mhz) {
 		memregs[CPPCR] = (m << 24) | 0x090520;
 		INFO("Set CPU clock: %d", mhz);
 #endif
+		setTVOut(TVOut);
 	}
 }
 
