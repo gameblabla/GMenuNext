@@ -1394,7 +1394,7 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 			WARNING("SUSPEND ACTIVE");
 			input.update();
 		}
-		powerManager->doSuspend(0, NULL);
+		powerManager->doSuspend(0);
 		return true;
 	}
 
@@ -1406,13 +1406,14 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 		input.update();
 		if (input[POWER]) {
 			// HOLD POWER BUTTON
-			powerManager->doPowerOff(0, NULL);
+			poweroffDialog();
+			// powerManager->doPowerOff(0);
 			return true;
 		}
 	}
 
 	if (wasActive) {
-		powerManager->doSuspend(1, NULL);
+		powerManager->doSuspend(1);
 		return true;
 	}
 
