@@ -73,7 +73,6 @@
 #include "linkscannerdialog.h"
 #include "menusettingdatetime.h"
 
-
 #include "debug.h"
 
 #include <sys/mman.h>
@@ -190,9 +189,6 @@ int main(int /*argc*/, char * /*argv*/[]) {
 	signal(SIGINT, &quit_all);
 	signal(SIGSEGV,&quit_all);
 	signal(SIGTERM,&quit_all);
-
-	// system("df &"); // HACK: try to cache disk free information on background.
-	// system("nohup sleep 10 &"); // HACK: try to cache disk free information on background.
 
 	udcConnectedOnBoot = getUDCStatus();
 
