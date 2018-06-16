@@ -34,10 +34,9 @@
 
 using namespace std;
 
-LinkApp::LinkApp(GMenu2X *gmenu2x_, InputManager &inputMgr_,
-				 const char* linkfile)
-	: Link(gmenu2x_),
-	  inputMgr(inputMgr_)
+LinkApp::LinkApp(GMenu2X *gmenu2x_, InputManager &inputMgr_, const char* linkfile):
+	Link(gmenu2x_),
+	inputMgr(inputMgr_)
 {
 	manual = "";
 	file = linkfile;

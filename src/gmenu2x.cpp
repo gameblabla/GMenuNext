@@ -1308,10 +1308,10 @@ void GMenu2X::main() {
 		else if ( input[SETTINGS] ) settings();
 		else if ( input[MENU]     ) contextMenu();
 		// LINK NAVIGATION
-		else if ( input[LEFT ]  ) menu->pageUp();
-		else if ( input[RIGHT]  ) menu->pageDown();
-		else if ( input[UP   ]  ) menu->linkUp();
-		else if ( input[DOWN ]  ) menu->linkDown();
+		else if ( input[LEFT ] ) menu->pageUp();
+		else if ( input[RIGHT] ) menu->pageDown();
+		else if ( input[UP   ] ) menu->linkUp();
+		else if ( input[DOWN ] ) menu->linkDown();
 		// SECTION
 		else if ( input[SECTION_PREV] ) menu->decSectionIndex();
 		else if ( input[SECTION_NEXT] ) menu->incSectionIndex();
@@ -1331,24 +1331,7 @@ void GMenu2X::main() {
 		}
 #endif
 		// SELLINKAPP SELECTED
-		else if (menu->selLinkApp()!=NULL) {
-			if ( input[MANUAL] ) menu->selLinkApp()->showManual();
-		// 	else if ( input.isActive(MODIFIER) ) {
-		// 		// VOLUME
-		// 		if ( input[VOLDOWN] && !input.isActive(VOLUP) )
-		// 			menu->selLinkApp()->setVolume( constrain(menu->selLinkApp()->volume()-1,0,100) );
-		// 		if ( input[VOLUP] && !input.isActive(VOLDOWN) )
-		// 			menu->selLinkApp()->setVolume( constrain(menu->selLinkApp()->volume()+1,0,100) );
-		// 		if ( input.isActive(VOLUP) && input.isActive(VOLDOWN) ) menu->selLinkApp()->setVolume(-1);
-		// 	} else {
-		// 		// CLOCK
-		// 		if ( input[VOLDOWN] && !input.isActive(VOLUP) )
-		// 			menu->selLinkApp()->setCPU( constrain(menu->selLinkApp()->clock()-10,50,confInt["cpuMax"]) );
-		// 		if ( input[VOLUP] && !input.isActive(VOLDOWN) )
-		// 			menu->selLinkApp()->setCPU( constrain(menu->selLinkApp()->clock()+10,50,confInt["cpuMax"]) );
-		// 		if ( input.isActive(VOLUP) && input.isActive(VOLDOWN) ) menu->selLinkApp()->setCPU(CPU_CLK_DEFAULT);
-		// 	}
-		}
+		else if (input[MANUAL] && menu->selLinkApp() != NULL) menu->selLinkApp()->showManual();
 
 
 		// On Screen Help
@@ -1372,9 +1355,6 @@ void GMenu2X::main() {
 		// 		if (input[MODIFIER] || input[CONFIRM] || input[CANCEL]) close = true;
 		// 	}
 		// }
-
-		// tickSuspend = tickPowerOff = SDL_GetTicks();
-		// tickSuspend = SDL_GetTicks();
 	}
 
 	exitMainThread = true;
@@ -1384,12 +1364,11 @@ void GMenu2X::main() {
 }
 
 bool GMenu2X::inputCommonActions(bool &inputAction) {
-	INFO("SDL_GetTicks(): %d\tsuspendActive: %d", SDL_GetTicks(), powerManager->suspendActive);
+	// INFO("SDL_GetTicks(): %d\tsuspendActive: %d", SDL_GetTicks(), powerManager->suspendActive);
 
 	if (powerManager->suspendActive) {
 		// SUSPEND ACTIVE
 		while (!input[POWER]) {
-			WARNING("SUSPEND ACTIVE");
 			input.update();
 		}
 		powerManager->doSuspend(0);
@@ -1405,7 +1384,6 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 		if (input[POWER]) {
 			// HOLD POWER BUTTON
 			poweroffDialog();
-			// powerManager->doPowerOff(0);
 			return true;
 		}
 	}
@@ -1555,9 +1533,9 @@ void GMenu2X::settings() {
 		setBacklight(confInt["backlight"], false);
 		writeConfig();
 
+		powerManager->resetSuspendTimer();
 		powerManager->setSuspendTimeout(confInt["backlightTimeout"]);
 		powerManager->setPowerTimeout(confInt["powerTimeout"]);
-		powerManager->resetSuspendTimer();
 
 #if defined(TARGET_GP2X)
 //G
