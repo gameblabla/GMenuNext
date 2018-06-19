@@ -450,21 +450,15 @@ void GMenu2X::quit() {
 }
 
 void GMenu2X::initBG(const string &imagePath) {
-	// sc.del("bgmain");
-
 	if (bg != NULL) delete bg;
 
 	bg = new Surface(s);
 	bg->box(0, 0, resX, resY, 0, 0, 0);
 
 	if (!imagePath.empty() && sc.add(imagePath) != NULL) {
-		// Surface wall(imagePath, false);
-		// wall.blit(bg, 0, 0);
 		sc[imagePath]->blit(bg, 0, 0);
 	} else if (sc.add(confStr["wallpaper"]) != NULL) {
 		sc[confStr["wallpaper"]]->blit(bg, 0, 0);
-		// Surface wall(confStr["wallpaper"], false);
-		// wall.blit(bg, 0, 0);
 	}
 }
 
@@ -556,7 +550,7 @@ void GMenu2X::initMenu() {
 
 	//Menu structure handler
 	menu = new Menu(this);
-	for (uint i=0; i < menu->getSections().size(); i++) {
+	for (uint i = 0; i < menu->getSections().size(); i++) {
 		//Add virtual links in the applications section
 		if (menu->getSections()[i]=="applications") {
 			menu->addActionLink(i, tr["Explorer"], MakeDelegate(this, &GMenu2X::explorer), tr["Launch an application"], "skin:icons/explorer.png");
@@ -769,7 +763,6 @@ void GMenu2X::readConfig() {
 		confInt["link"] = 0;
 	}
 
-	// TVOut = "OFF";
 	resX = constrain( confInt["resolutionX"], 320, 1920 );
 	resY = constrain( confInt["resolutionY"], 240, 1200 );
 }
@@ -882,8 +875,8 @@ void GMenu2X::setSkin(const string &skin, bool setWallpaper, bool clearSC) {
 			}
 			skinconf.close();
 
-			if (setWallpaper && !skinConfStr["wallpaper"].empty() && fileExists("skins/"+skin+"/wallpapers/"+skinConfStr["wallpaper"])) {
-				confStr["wallpaper"] = "skins/"+skin+"/wallpapers/"+skinConfStr["wallpaper"];
+			if (setWallpaper && !skinConfStr["wallpaper"].empty() && fileExists("skins/" + skin + "/wallpapers/" + skinConfStr["wallpaper"])) {
+				confStr["wallpaper"] = "skins/" + skin + "/wallpapers/" + skinConfStr["wallpaper"];
 				sc[confStr["wallpaper"]]->blit(bg,0,0);
 			}
 		}
@@ -922,8 +915,6 @@ void GMenu2X::setSkin(const string &skin, bool setWallpaper, bool clearSC) {
 //font
 	initFont();
 }
-
-// void GMenu2X::writeCommonIni() {}
 
 void GMenu2X::readTmp() {
 	lastSelectorElement = -1;
@@ -1063,7 +1054,7 @@ void GMenu2X::main() {
 
 #if defined(TARGET_RS97)
 	if (udcConnectedOnBoot == UDC_CONNECT) {
-		sc[currBackdrop]->blit(s,0,0);
+		// sc[currBackdrop]->blit(s,0,0);
 		checkUDC();
 	}
 #endif
