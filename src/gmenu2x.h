@@ -236,7 +236,7 @@ public:
 	//Status functions
 	void main();
 	void settings();
-	void restartDialog();
+	void restartDialog(bool showDialog = false);
 	void poweroffDialog();
 
 	/*!
