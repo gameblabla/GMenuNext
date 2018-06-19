@@ -29,7 +29,6 @@
 #include "selector.h"
 #include "textdialog.h"
 #include "imageviewerdialog.h"
-// #include "messagebox.h"
 #include "debug.h"
 
 using namespace std;
@@ -209,20 +208,8 @@ int LinkApp::clock() {
 	return iclock;
 }
 
-// const string &LinkApp::clockStr(int maxClock) {
-// 	if (iclock > maxClock){
-//     setCPU(maxClock);
-//   }
-// 	return sclock;
-// }
-
 void LinkApp::setCPU(int mhz) {
 	iclock = constrain(mhz, gmenu2x->confInt["cpuMin"], gmenu2x->confInt["cpuMax"]);
-	// stringstream ss;
-	// sclock = "";
-	// ss << iclock << "Mhz";
-	// ss >> sclock;
-
 	edited = true;
 }
 
@@ -230,20 +217,8 @@ int LinkApp::volume() {
 	return ivolume;
 }
 
-// const string &LinkApp::volumeStr() {
-// 	return svolume;
-// }
-
 void LinkApp::setVolume(int vol) {
 	ivolume = constrain(vol, -1, 100);
-	// stringstream ss;
-	// svolume = "";
-	// if (ivolume<0)
-	// 	ss << gmenu2x->confInt["globalVolume"];
-	// else
-	// 	ss << ivolume;
-	// ss >> svolume;
-
 	edited = true;
 }
 
@@ -253,17 +228,8 @@ int LinkApp::gamma() {
 	return igamma;
 }
 
-// const string &LinkApp::gammaStr() {
-// 	return sgamma;
-// }
-
 void LinkApp::setGamma(int gamma) {
 	igamma = constrain(gamma, 0, 100);
-	// stringstream ss;
-	// sgamma = "";
-	// ss << igamma;
-	// ss >> sgamma;
-
 	edited = true;
 }
 // /G
@@ -275,7 +241,6 @@ void LinkApp::setBackdrop(const string selectedFile) {
 }
 
 bool LinkApp::targetExists() {
-// #if !defined(TARGET_GP2X) && !defined(TARGET_WIZ) && !defined(TARGET_CAANOO)
 #if defined(TARGET_PC)
 	return true; //For displaying elements during testing on pc
 #endif

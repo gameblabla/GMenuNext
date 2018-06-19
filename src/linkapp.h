@@ -38,10 +38,8 @@ Parses links files.
 class LinkApp : public Link {
 private:
 	InputManager &inputMgr;
-	// string svolume;
-	// string sclock, svolume;
+	// string svolume, sclock, svolume;
 	int iclock, ivolume;
-
 
 	string exec, params, workdir, manual, selectordir, selectorfilter, selectorscreens, backdrop, backdropPath;
 	bool selectorbrowser, useRamTimings, useGinge;
