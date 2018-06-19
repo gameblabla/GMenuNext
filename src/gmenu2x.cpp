@@ -213,7 +213,7 @@ int main(int /*argc*/, char * /*argv*/[]) {
 }
 
 void GMenu2X::hwInit() {
-#if defined(TARGET_GP2X) || defined(TARGET_WIZ) || defined(TARGET_CAANOO) || (TARGET_RS97)
+#if defined(TARGET_GP2X) || defined(TARGET_WIZ) || defined(TARGET_CAANOO) || defined(TARGET_RS97)
 	memdev = open("/dev/mem", O_RDWR);
 	if (memdev < 0){
 		WARNING("Could not open /dev/mem");
