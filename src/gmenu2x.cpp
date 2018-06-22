@@ -586,7 +586,7 @@ void GMenu2X::initMenu() {
 #elif defined(TARGET_RS97)
 			// menu->addActionLink(i, tr["TV"], MakeDelegate(this, &GMenu2X::toggleTvOut), tr["Activate/deactivate tv-out"], "skin:icons/tv.png");
 			//menu->addActionLink(i, "Format", MakeDelegate(this, &GMenu2X::formatSd), tr["Format internal SD"], "skin:icons/format.png");
-			menu->addActionLink(i, tr["Umount"], MakeDelegate(this, &GMenu2X::umountSd), tr["Umount external SD"], "skin:icons/eject.png");
+			menu->addActionLink(i, tr["Umount"], MakeDelegate(this, &GMenu2X::umountSdDialog), tr["Umount external SD"], "skin:icons/eject.png");
 #endif
 
 			if (fileExists(path + "log.txt"))
@@ -1112,6 +1112,8 @@ void GMenu2X::main() {
 	}
 #endif
 
+	if (curMMCStatus == MMC_INSERT) mountSd();
+
 	while (!quit) {
 		tickNow = SDL_GetTicks();
 
@@ -1469,21 +1471,17 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 
 	if (MMCToggle) {
 		MMCToggle = 0;
-		string msg, command;
+		string msg;
 
-		if (curMMCStatus == MMC_INSERT) {
-			msg = tr["SD card connected"];
-			command = "mount /dev/mmcblk1p1 /mnt/ext_sd -t vfat -o rw,utf8";
-		// } else		if (curMMCStatus == MMC_REMOVE) {
-		} else {
-			msg = tr["SD card removed"];
-			command = "umount -fl /mnt/ext_sd";
-		}
+		if (curMMCStatus == MMC_INSERT) msg = tr["SD card connected"];
+		else msg = tr["SD card removed"];
 
-		MessageBox mb(this, msg, "skin:icons/sd.png");
+		MessageBox mb(this, msg, "skin:icons/eject.png");
 		mb.setAutoHide(1000);
 		mb.exec();
-		system(command.c_str());
+
+		if (curMMCStatus == MMC_INSERT) mountSd();
+		else umountSd();
 	}
 
 	if (tvOutToggle) {
@@ -1822,7 +1820,26 @@ void GMenu2X::setTVOut(string TVOut) {
 #endif
 }
 
+void GMenu2X::mountSd() {
+	system("sleep 1; mount -t vfat -o rw,utf8 /dev/mmcblk1p1 /mnt/ext_sd");
+}
+
+void GMenu2X::umountSd() {
+	system("umount -fl /mnt/ext_sd");
+}
+
 #if defined(TARGET_RS97)
+void GMenu2X::umountSdDialog() {
+	MessageBox mb(this, tr["Umount external SD card?"], "skin:icons/eject.png");
+	mb.setButton(CONFIRM, tr["Yes"]);
+	mb.setButton(CANCEL,  tr["No"]);
+	if (mb.exec() == CONFIRM) {
+		umountSd();
+		MessageBox mb(this, tr["Complete!"]);
+		mb.exec();
+	}
+}
+
 void GMenu2X::checkUDC() {
 	if (getUDCStatus() == UDC_CONNECT) {
 		MessageBox mb(this, tr["Select USB mode:"], "skin:icons/usb.png");
@@ -1838,7 +1855,8 @@ void GMenu2X::checkUDC() {
 
 			if (getMMCStatus() == MMC_INSERT) {
 				// system("/usr/bin/usb_conn_ext_sd.sh");
-				system("umount -fl /mnt/ext_sd");
+				// system("umount -fl /mnt/ext_sd");
+				umountSd();
 				system("echo '/dev/mmcblk1p1' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
 				INFO("%s, connect USB disk for external SD", __func__);
 			}
@@ -1859,7 +1877,8 @@ void GMenu2X::checkUDC() {
 			if (getMMCStatus() == MMC_INSERT) {
 				// system("/usr/bin/usb_disconn_ext_sd.sh");
 				system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
-				system("mount /dev/mmcblk1p1 /mnt/ext_sd -t vfat -o rw,utf8 -t vfat -o rw,utf8");
+				// system("mount /dev/mmcblk1p1 /mnt/ext_sd -t vfat -o rw,utf8 -t vfat -o rw,utf8");
+				mountSd();
 				INFO("%s, disconnect USB disk for external SD", __func__);
 			}
 			powerManager->resetSuspendTimer();
@@ -1867,16 +1886,7 @@ void GMenu2X::checkUDC() {
 	}
 }
 
-void GMenu2X::umountSd() {
-	MessageBox mb(this, tr["Umount external SD card?"], "skin:icons/eject.png");
-	mb.setButton(CONFIRM, tr["Yes"]);
-	mb.setButton(CANCEL,  tr["No"]);
-	if (mb.exec() == CONFIRM) {
-		system("/usr/bin/umount_ext_sd.sh");
-		MessageBox mb(this, tr["Complete!"]);
-		mb.exec();
-	}
-}
+
 
 void GMenu2X::formatSd() {
 	MessageBox mb(this, tr["Format internal SD card?"], "skin:icons/format.png");
