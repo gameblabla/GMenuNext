@@ -60,7 +60,7 @@ dist: dir shared
 	# cp -RH assets/$(TARGET)/emulators/* $(DISTDIR)/sections/emulators/
 	# cp -RH assets/$(TARGET)/games/* $(DISTDIR)/sections/games/
 	# cp -RH assets/$(TARGET)/applications/* $(DISTDIR)/sections/applications/
-	cd $(DISTDIR)/ && zip -FSr ../GMenuNext.zip .
+	cd $(DISTDIR)/.. && zip -FSr GMenuNext.zip gmenu2x
 
 -include $(patsubst src/%.cpp, $(OBJDIR)/src/%.d, $(SOURCES))
 
