@@ -12,15 +12,24 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 ## Changelog
 **2018.06.XX** (*Codename: UUDDLRLRBA.*)
 * Settings allow to change Section Bar position;
+* Revamped TV-out function:
+	* Plug/unplug the TV-out connector to enable/disable TV-out;
 * Change CPU clock values safe range to 252~642MHz;
 	* Allow to set max/min/default CPU clock values by editing gmenu2x.conf;
-* New class PowerManager;
+* New class PowerManager:
 	* Use of SDL_AddTimer to manage Suspend and Poweroff;
 	* Get rid of maths with SDL_GetTicks;
-* Optimize button press and repeat detection ;
+* Optimize button press and repeat detection:
 	* Fine tune button timings;
+* Use /dev/mem to monitor device status (faster than system function);
 * Rework Link Scanner dialog;
+* Rework of external SD card mount/umount;
 * Fix Text Viewer dialog top position;
+* Improve automatic loading of Manual files;
+* Removed all extra skins:
+	* Releases will bundle only Default skin;
+* Re-add unicode font supporting Chinese, Korean, Japanese and Russian languages;
+* Batch of internal changes and bug fixes.
 
 **2018.06.03** (*Codename: McFly.*)
 * New Date & Time settings:
