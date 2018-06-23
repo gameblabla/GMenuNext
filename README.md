@@ -14,7 +14,7 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 * Settings allow to change Section Bar position;
 * Revamped TV-out function:
 	* Plug/unplug the TV-out connector to enable/disable TV-out;
-* Change CPU clock values safe range to 252~642MHz;
+* Change CPU clock values safe range to 312~642MHz;
 	* Allow to set max/min/default CPU clock values by editing gmenu2x.conf;
 * New class PowerManager:
 	* Use of SDL_AddTimer to manage Suspend and Poweroff;
