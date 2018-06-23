@@ -10,7 +10,7 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
-**2018.06.XX** (*Codename: UUDDLRLRBA.*)
+**2018.06.23** (*Codename: UUDDLRLRBA.*)
 * Settings allow to change Section Bar position;
 * Revamped TV-out function:
 	* Plug/unplug the TV-out connector to enable/disable TV-out;
