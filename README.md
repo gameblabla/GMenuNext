@@ -214,19 +214,19 @@ The fields logged are:
 ## Controls
 
 All controls are being revised. Here's the legacy GMenu2X control mapping:
-* X, Stick left: Goes up one directory in file browser.
-* X: Cancel action.
-* B, Stick press: Launch selected link / Confirm action.
-* L, R: Switch between sections - PageUp/PageDown on lists.
-* Y: Bring up the manual/readme.
-* VOLDOWN: Decrease cpu clock.
-* VOLUP: Increase cpu clock.
-* VOLDOWN+VOLUP: Reset clock.
-* A+VOLDOWN: Decrease volume for the selected link.
-* A+VOLUP: Increase volume for the selected link.
-* A+VOLDOWN+VOLUP: Reset volume for the selected link.
-* SELECT: Bring up the contextual menu.
-* START: GMenu2X options.
+* A, Stick press: Launch selected link / Confirm action;
+* B: Cancel action;
+* X, Stick left: Goes up one directory in file browser;
+* Y: Bring up the manual/readme;
+* L, R: Switch between sections / PageUp/PageDown on lists;
+* START: GMenu2X options;
+* SELECT: Bring up the contextual menu;
+* SELECT + L: Volume control;
+* SELECT + R: Take a screenshot;
+* BRIGHTNESS: Change screen brightness;
+* POWER: Toggle Suspend mode;
+* POWER hold: Bring up Poweroff dialog.
+* TV-Out: (Dis)Connect the TV-out plug to toggle TV-out signal.
 
 
 ## Contacts
