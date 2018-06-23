@@ -213,7 +213,6 @@ The fields logged are:
 
 ## Controls
 
-All controls are being revised. Here's the legacy GMenu2X control mapping:
 * A, Stick press: Launch selected link / Confirm action;
 * B: Cancel action;
 * X, Stick left: Goes up one directory in file browser;
