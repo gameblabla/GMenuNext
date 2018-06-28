@@ -1057,20 +1057,12 @@ void GMenu2X::hwCheck() {
 		if (preMMCStatus != curMMCStatus) {
 			preMMCStatus = curMMCStatus;
 			MMCToggle = 1;
-			// SDL_Event event;
-			// event.type = SDL_KEYDOWN;
-			// event.key.keysym.sym = SDLK_UNKNOWN;
-			// SDL_PushEvent(&event);
 		}
 
 		tvOutConnected = getTVOutStatus();
 		if (tvOutPrev != tvOutConnected) {
 			tvOutPrev = tvOutConnected;
 			tvOutToggle = 1;
-			// SDL_Event event;
-			// event.type = SDL_KEYDOWN;
-			// event.key.keysym.sym = SDLK_UNKNOWN;
-			// SDL_PushEvent(&event);
 		}
 	}
 }
@@ -1664,17 +1656,6 @@ void GMenu2X::settings() {
 			// unlink("/mnt/root");
 		// else if (!fileExists("/mnt/root") && showRootFolder)
 			// symlink("/","/mnt/root");
-// #elif defined(TARGET_RS97)
-		// if (tvOutPrev != TVOut) setTVOut(TVOut);
-		// if (TVOut != "OFF") {
-		// 	MessageBox mb(this, tr["TV-out enabled.\nContinue?"], "skin:icons/tv.png");
-		// 	mb.setButton(SETTINGS, tr["Yes"]);
-		// 	mb.setButton(CONFIRM,  tr["No"]);
-		// 	if (mb.exec() == CONFIRM) {
-		// 		TVOut = "OFF";
-		// 		setTVOut(TVOut);
-		// 	}
-		// }
 #endif
 
 		if (prevSkinBackdrops != confInt["skinBackdrops"] || prevDateTime != confStr["datetime"]) restartDialog();
@@ -1867,17 +1848,12 @@ void GMenu2X::checkUDC() {
 				SDL_Delay(200);
 			}
 
-// $(( $(readlink /dev/root | head -c -3 | tail -c1) ^ 1 )); // secondary
-// $(readlink /dev/root | head -c -3 | tail -c1) // main
-
 			system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
 
 			system("mount /dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4 /mnt/int_sd -t vfat -o rw,utf8");
 			INFO("%s, disconnect usbdisk for internal sd", __func__);
 			if (getMMCStatus() == MMC_INSERT) {
-				// system("/usr/bin/usb_disconn_ext_sd.sh");
 				system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
-				// system("mount /dev/mmcblk1p1 /mnt/ext_sd -t vfat -o rw,utf8 -t vfat -o rw,utf8");
 				mountSd();
 				INFO("%s, disconnect USB disk for external SD", __func__);
 			}
@@ -1885,8 +1861,6 @@ void GMenu2X::checkUDC() {
 		}
 	}
 }
-
-
 
 void GMenu2X::formatSd() {
 	MessageBox mb(this, tr["Format internal SD card?"], "skin:icons/format.png");
@@ -1906,49 +1880,6 @@ void GMenu2X::formatSd() {
 	}
 }
 #endif
-
-
-// void GMenu2X::toggleTvOut() {
-// #if defined(TARGET_GP2X)
-// 	if (cx25874!=0)
-// 		gp2x_tvout_off();
-// 	else
-// 		gp2x_tvout_on(confStr["TVOut"] == "PAL");
-// #elif defined(TARGET_RS97)
-// 	int tvout=0;
-// 	char buf[32]={0};
-// 	int fd = open("/mnt/game/gmenu2x/tvout", O_RDWR);
-// 	if (fd > 0){
-// 		read(fd, buf, sizeof(buf));
-// 		INFO("Current TV-out value: %s", buf);
-// 		if (memcmp(buf, "1", 1) == 0){
-// 			tvout = 0;
-// 			sprintf(buf, "0");
-// 			INFO("Turn off TV-out");
-// 		}
-// 		else{
-// 			tvout = 1;
-// 			sprintf(buf, "1");
-// 			INFO("Turn on TV-out");
-// 		}
-// 		lseek(fd, 0, SEEK_SET);
-// 		write(fd, buf, 1);
-// 		close(fd);
-// 	}
-// 	else{
-// 		tvout = 1;
-// 		fd = open("/mnt/game/gmenu2x/tvout", O_CREAT);
-// 		sprintf(buf, "1");
-// 		write(fd, buf, 1);
-// 		close(fd);
-// 		INFO("Create new TV-out file");
-// 	}
-
-// 	sprintf(buf, "/usr/bin/tvout.sh %d %d", tvout, confStr["TVOut"] == "PAL" ? 1 : 2);
-// 	system(buf);
-// 	INFO("run cmd: %s", buf);
-// #endif
-// }
 
 void GMenu2X::contextMenu() {
 	vector<MenuOption> voices;
