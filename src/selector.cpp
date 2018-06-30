@@ -32,7 +32,7 @@
 #include "linkapp.h"
 #include "selector.h"
 #include "filelister.h"
-// #include "debug.h"
+#include "debug.h"
 
 using namespace std;
 
@@ -67,14 +67,14 @@ int Selector::exec(int startSelection) {
 
 	SDL_Rect rect;
 
-	if (screendir == "") {
+	// if (screendir == "") {
 		drawTopBar(this->bg);
 		rect = gmenu2x->listRect; //{0, gmenu2x->skinConfInt["topBarHeight"], gmenu2x->resX, gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"] - gmenu2x->skinConfInt["topBarHeight"]};
-	} else {
-		this->bg->box(0, 0, gmenu2x->skinConfInt["selectorX"], gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"], gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
-		this->bg->setClipRect(0, 0, gmenu2x->skinConfInt["selectorX"] - 4, gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"]);
-		rect = (SDL_Rect){gmenu2x->skinConfInt["selectorX"], 0, gmenu2x->resX - gmenu2x->skinConfInt["selectorX"], gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"]};
-	}
+	// } else {
+		// this->bg->box(0, 0, gmenu2x->skinConfInt["selectorX"], gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"], gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
+		// this->bg->setClipRect(0, 0, gmenu2x->skinConfInt["selectorX"] - 4, gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"]);
+		// rect = (SDL_Rect){gmenu2x->skinConfInt["selectorX"], 0, gmenu2x->resX - gmenu2x->skinConfInt["selectorX"], gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"]};
+	// }
 
 	// dc: adjust rowHeight with font
 	uint rowHeight = gmenu2x->font->getHeight() + 1; // gp2x=15+1 / pandora=19+1
@@ -109,6 +109,10 @@ int Selector::exec(int startSelection) {
 
 	gmenu2x->sc.defaultAlpha = false;
 	// gmenu2x->input.setWakeUpInterval(1); // refresh on load
+	// gmenu2x->input.setWakeUpInterval(1);
+	Uint32 tickStart = SDL_GetTicks();
+	uint fadeAlpha = 0;
+
 	while (!close) {
 		this->bg->blit(gmenu2x->s, 0, 0);
 
@@ -122,15 +126,6 @@ int Selector::exec(int startSelection) {
 			gmenu2x->s->box(rect.x, iY, rect.w, rowHeight, gmenu2x->skinConfColors[COLOR_SELECTION_BG]);
 		}
 
-		//Screenshot
-		if (screendir != "") {
-			if (selected - fl.dirCount() < screens.size() && screens[selected - fl.dirCount()] != "") {
-				gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
-			} else {
-				if (gmenu2x->sc.skinRes("imgs/preview.png") != NULL)
-					iconPreview->blitCenter(gmenu2x->s, gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
-			}
-		}
 
 		//Files & Dirs
 		iY = rect.y + 1;
@@ -149,6 +144,46 @@ int Selector::exec(int startSelection) {
 			iY += rowHeight;
 		}
 
+		//Screenshot
+		if (selected - fl.dirCount() < screens.size() && screens[selected - fl.dirCount()] != "") {
+			gmenu2x->s->box(320 - fadeAlpha, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
+			gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - fadeAlpha + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+			// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - fadeAlpha, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+
+			if (fadeAlpha < gmenu2x->skinConfInt["selectorX"]) {
+				fadeAlpha = intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
+				DEBUG("fadeAlpha: %d", fadeAlpha);
+
+				gmenu2x->s->flip();
+				gmenu2x->input.setWakeUpInterval(1);
+				continue;
+			}
+		} else {
+			if (fadeAlpha > 0) {
+				gmenu2x->s->box(320 - fadeAlpha, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
+				// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - fadeAlpha + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+
+				fadeAlpha = gmenu2x->skinConfInt["selectorX"] - intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
+				gmenu2x->s->flip();
+				gmenu2x->input.setWakeUpInterval(1);
+				DEBUG("fadeAlpha: %d", fadeAlpha);
+
+				continue;
+			}
+			// fadeAlpha = 0;
+		}
+		gmenu2x->input.setWakeUpInterval(1000);
+
+		// if (screendir != "") {
+		// 	if (selected - fl.dirCount() < screens.size() && screens[selected - fl.dirCount()] != "") {
+		// 		gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+		// 	} else {
+		// 		if (gmenu2x->sc.skinRes("imgs/preview.png") != NULL)
+		// 			iconPreview->blitCenter(gmenu2x->s, gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+		// 	}
+		// }
+
+
 		gmenu2x->s->clearClipRect();
 		gmenu2x->drawScrollBar(numRows, fl.size(), firstElement, rect);
 		gmenu2x->s->flip();
@@ -161,21 +196,25 @@ int Selector::exec(int startSelection) {
 		} else if ( gmenu2x->input[MENU] ) {
 			gmenu2x->editLink();
 		} else if ( gmenu2x->input[UP] ) {
+			tickStart = SDL_GetTicks();
 			if (selected == 0)
 				selected = fl.size()-1;
 			else
 				selected -= 1;
 		} else if ( gmenu2x->input[PAGEUP] || gmenu2x->input[LEFT] ) {
+			tickStart = SDL_GetTicks();
 			if (selected < numRows)
 				selected = 0;
 			else
 				selected -= numRows;
 		} else if ( gmenu2x->input[DOWN] ) {
+			tickStart = SDL_GetTicks();
 			if (selected + 1 >= fl.size())
 				selected = 0;
 			else
 				selected += 1;
 		} else if ( gmenu2x->input[PAGEDOWN] || gmenu2x->input[RIGHT] ) {
+			tickStart = SDL_GetTicks();
 			if (selected + numRows >= fl.size())
 				selected = fl.size() - 1;
 			else
