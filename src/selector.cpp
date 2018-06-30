@@ -99,7 +99,7 @@ int Selector::exec(int startSelection) {
 	}
 
 	prepare(&fl, &screens, &titles);
-	uint selected = constrain(startSelection, 0, fl.size() - 1);
+	int selected = constrain(startSelection, 0, fl.size() - 1);
 
 	// moved surfaces out to prevent reloading on loop
 	Surface *iconGoUp = gmenu2x->sc.skinRes("imgs/go-up.png");
@@ -191,34 +191,26 @@ int Selector::exec(int startSelection) {
 		bool inputAction = gmenu2x->input.update();
 		if (gmenu2x->inputCommonActions(inputAction)) continue;
 
-		if ( gmenu2x->input[SETTINGS] ) {
+		if ( gmenu2x->input[UP] ) {
+			tickStart = SDL_GetTicks();
+			selected -= 1;
+			if (selected < 0) selected = fl.size()-1;
+		} else if ( gmenu2x->input[DOWN] ) {
+			tickStart = SDL_GetTicks();
+			selected += 1;
+			if (selected >= fl.size()) selected = 0;
+		} else if ( gmenu2x->input[PAGEUP] || gmenu2x->input[LEFT] ) {
+			tickStart = SDL_GetTicks();
+			selected -= numRows;
+			if (selected < 0) selected = 0;
+		} else if ( gmenu2x->input[PAGEDOWN] || gmenu2x->input[RIGHT] ) {
+			tickStart = SDL_GetTicks();
+			selected += numRows;
+			if (selected > fl.size()) selected = fl.size() - 1;
+		} else if ( gmenu2x->input[SETTINGS] ) {
 			close = true; result = false;
 		} else if ( gmenu2x->input[MENU] ) {
 			gmenu2x->editLink();
-		} else if ( gmenu2x->input[UP] ) {
-			tickStart = SDL_GetTicks();
-			if (selected == 0)
-				selected = fl.size()-1;
-			else
-				selected -= 1;
-		} else if ( gmenu2x->input[PAGEUP] || gmenu2x->input[LEFT] ) {
-			tickStart = SDL_GetTicks();
-			if (selected < numRows)
-				selected = 0;
-			else
-				selected -= numRows;
-		} else if ( gmenu2x->input[DOWN] ) {
-			tickStart = SDL_GetTicks();
-			if (selected + 1 >= fl.size())
-				selected = 0;
-			else
-				selected += 1;
-		} else if ( gmenu2x->input[PAGEDOWN] || gmenu2x->input[RIGHT] ) {
-			tickStart = SDL_GetTicks();
-			if (selected + numRows >= fl.size())
-				selected = fl.size() - 1;
-			else
-				selected += numRows;
 		} else if ( gmenu2x->input[CANCEL] ) {
 			if (link->getSelectorBrowser()) {
 				string::size_type p = dir.rfind("/", dir.size() - 2);
