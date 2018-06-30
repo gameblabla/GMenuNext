@@ -10,6 +10,21 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
+**2018.06.23** (*Codename: Blast Processing.*)
+* Fix memory address register:
+	* Fix SetCPU not setting CPU clock;
+	* TV-Out working among SetCPU;
+* Do not use inputCommonActions in MessageBox:
+	* Prevents power button bounce;
+	* Prevents entering in suspend mode while a messagebox is on screen;
+* Updated compiler flags (optimize size and performance);
+* UDC autodetect mount point when booting on external SD;
+* Simplify Link and LinkAction classes;
+* Use memregs to get UDC status (faster than system function);
+* Releases will bundle only default GMenu2X assets:
+	* Cleaned up default assets;
+	* Allow to use icons/wallpapers/backdrops pack.
+
 **2018.06.23** (*Codename: UUDDLRLRBA.*)
 * Settings allow to change Section Bar position;
 * Revamped TV-out function:

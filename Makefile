@@ -51,6 +51,7 @@ dist: dir shared
 	install -m755 -D $(APPNAME) $(DISTDIR)/gmenu2x
 	install -m644 assets/$(TARGET)/input.conf $(DISTDIR)
 	# install -m755 -d $(DISTDIR)/sections/applications $(DISTDIR)/sections/emulators $(DISTDIR)/sections/games $(DISTDIR)/sections/settings
+	install -m755 -d $(DISTDIR)/sections
 	install -m644 -D README.md $(DISTDIR)/README.txt
 	install -m644 -D COPYING $(DISTDIR)/COPYING
 	# install -m644 -D ChangeLog $(DISTDIR)/ChangeLog
@@ -60,7 +61,7 @@ dist: dir shared
 	cp -RH assets/$(TARGET)/skin.conf $(DISTDIR)/skins/Default
 	cp -RH assets/$(TARGET)/font.ttf $(DISTDIR)/skins/Default
 	# cp -RH assets/$(TARGET)/gmenu2x.conf $(DISTDIR)
-	cp -RH assets/$(TARGET)/icons/* $(DISTDIR)/skins/Default/icons/
+	#cp -RH assets/$(TARGET)/icons/* $(DISTDIR)/skins/Default/icons/
 	# cp -RH assets/$(TARGET)/emulators/* $(DISTDIR)/sections/emulators/
 	# cp -RH assets/$(TARGET)/games/* $(DISTDIR)/sections/games/
 	# cp -RH assets/$(TARGET)/applications/* $(DISTDIR)/sections/applications/
