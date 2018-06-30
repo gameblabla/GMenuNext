@@ -57,7 +57,7 @@ int Selector::exec(int startSelection) {
 	bool close = false, result = true;
 	vector<string> screens, titles;
 
-	uint i, firstElement = 0, iY;
+	uint i, firstElement = 0, iY, animation = 0;
 
 	FileLister fl(dir, link->getSelectorBrowser());
 	fl.setFilter(link->getSelectorFilter());
@@ -65,11 +65,11 @@ int Selector::exec(int startSelection) {
 
 	screendir = link->getSelectorScreens();
 
-	SDL_Rect rect;
+	// SDL_Rect rect;
 
 	// if (screendir == "") {
-		drawTopBar(this->bg);
-		rect = gmenu2x->listRect; //{0, gmenu2x->skinConfInt["topBarHeight"], gmenu2x->resX, gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"] - gmenu2x->skinConfInt["topBarHeight"]};
+		// drawTopBar(this->bg);
+		// rect = gmenu2x->listRect; //{0, gmenu2x->skinConfInt["topBarHeight"], gmenu2x->resX, gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"] - gmenu2x->skinConfInt["topBarHeight"]};
 	// } else {
 		// this->bg->box(0, 0, gmenu2x->skinConfInt["selectorX"], gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"], gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
 		// this->bg->setClipRect(0, 0, gmenu2x->skinConfInt["selectorX"] - 4, gmenu2x->resY - gmenu2x->skinConfInt["bottomBarHeight"]);
@@ -78,16 +78,25 @@ int Selector::exec(int startSelection) {
 
 	// dc: adjust rowHeight with font
 	uint rowHeight = gmenu2x->font->getHeight() + 1; // gp2x=15+1 / pandora=19+1
-	uint numRows = rect.h / rowHeight - 1;
+	uint numRows = gmenu2x->listRect.h / rowHeight - 1;
 
-	drawTitleIcon(link->getIconPath(), this->bg);
-	writeTitle(link->getTitle(), this->bg);
-	writeSubTitle(link->getDescription(), this->bg);
+	// drawTitleIcon(link->getIconPath(), this->bg);
+	// writeTitle(link->getTitle(), this->bg);
+	// writeSubTitle(link->getDescription(), this->bg);
 
-	this->bg->clearClipRect();
+	// this->bg->clearClipRect();
 
-	this->bg->box(rect, gmenu2x->skinConfColors[COLOR_LIST_BG]);
+	// this->bg->box(rect, gmenu2x->skinConfColors[COLOR_LIST_BG]);
+	// drawBottomBar(this->bg);
+
+
+	drawTopBar(this->bg, link->getTitle(), link->getDescription(), link->getIconPath());
 	drawBottomBar(this->bg);
+	this->bg->box(gmenu2x->listRect, gmenu2x->skinConfColors[COLOR_LIST_BG]);
+
+
+
+
 
 	if (link->getSelectorBrowser()) {
 		gmenu2x->drawButton(this->bg, "a", gmenu2x->tr["Select"],
@@ -109,9 +118,7 @@ int Selector::exec(int startSelection) {
 
 	gmenu2x->sc.defaultAlpha = false;
 	// gmenu2x->input.setWakeUpInterval(1); // refresh on load
-	// gmenu2x->input.setWakeUpInterval(1);
 	Uint32 tickStart = SDL_GetTicks();
-	uint fadeAlpha = 0;
 
 	while (!close) {
 		this->bg->blit(gmenu2x->s, 0, 0);
@@ -119,58 +126,58 @@ int Selector::exec(int startSelection) {
 		if (selected > firstElement + numRows) firstElement = selected - numRows;
 		if (selected < firstElement) firstElement = selected;
 
-		iY = selected-firstElement;
-		iY = rect.y + (iY * rowHeight);
+		iY = selected - firstElement;
+		iY = gmenu2x->listRect.y + (iY * rowHeight);
 
-		if(selected < fl.size()){
-			gmenu2x->s->box(rect.x, iY, rect.w, rowHeight, gmenu2x->skinConfColors[COLOR_SELECTION_BG]);
-		}
+		// if (selected < fl.size()) {
+			gmenu2x->s->box(gmenu2x->listRect.x, iY, gmenu2x->listRect.w, rowHeight, gmenu2x->skinConfColors[COLOR_SELECTION_BG]);
+		// }
 
 
 		//Files & Dirs
-		iY = rect.y + 1;
+		iY = gmenu2x->listRect.y + 1;
 
 		for (i = firstElement; i < fl.size() && i <= firstElement + numRows; i++) {
-			if(fl.isDirectory(i)){
+			if (fl.isDirectory(i)) {
 				if (fl[i] == "..")
-					iconGoUp->blitCenter(gmenu2x->s, rect.x + 10, iY + rowHeight/2);
+					iconGoUp->blitCenter(gmenu2x->s, gmenu2x->listRect.x + 10, iY + rowHeight/2);
 				else
-					iconFolder->blitCenter(gmenu2x->s, rect.x + 10, iY + rowHeight/2);
-			} else{
-				iconFile->blitCenter(gmenu2x->s, rect.x + 10, iY + rowHeight/2);
+					iconFolder->blitCenter(gmenu2x->s, gmenu2x->listRect.x + 10, iY + rowHeight/2);
+			} else {
+				iconFile->blitCenter(gmenu2x->s, gmenu2x->listRect.x + 10, iY + rowHeight/2);
 			}
-			gmenu2x->s->write(gmenu2x->font, fl[i], rect.x + 21, iY+4, HAlignLeft, VAlignMiddle);
+			gmenu2x->s->write(gmenu2x->font, fl[i], gmenu2x->listRect.x + 21, iY + 4, HAlignLeft, VAlignMiddle);
 
 			iY += rowHeight;
 		}
 
 		//Screenshot
 		if (selected - fl.dirCount() < screens.size() && screens[selected - fl.dirCount()] != "") {
-			gmenu2x->s->box(320 - fadeAlpha, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
-			gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - fadeAlpha + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
-			// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - fadeAlpha, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+			gmenu2x->s->box(320 - animation, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
+			gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - animation + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+			// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - animation, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
 
-			if (fadeAlpha < gmenu2x->skinConfInt["selectorX"]) {
-				fadeAlpha = intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
-				DEBUG("fadeAlpha: %d", fadeAlpha);
+			if (animation < gmenu2x->skinConfInt["selectorX"]) {
+				animation = intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
+				DEBUG("animation: %d", animation);
 
 				gmenu2x->s->flip();
 				gmenu2x->input.setWakeUpInterval(1);
 				continue;
 			}
 		} else {
-			if (fadeAlpha > 0) {
-				gmenu2x->s->box(320 - fadeAlpha, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
-				// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - fadeAlpha + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
+			if (animation > 0) {
+				gmenu2x->s->box(320 - animation, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
+				// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - animation + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
 
-				fadeAlpha = gmenu2x->skinConfInt["selectorX"] - intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
+				animation = gmenu2x->skinConfInt["selectorX"] - intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
 				gmenu2x->s->flip();
 				gmenu2x->input.setWakeUpInterval(1);
-				DEBUG("fadeAlpha: %d", fadeAlpha);
+				DEBUG("animation: %d", animation);
 
 				continue;
 			}
-			// fadeAlpha = 0;
+			// animation = 0;
 		}
 		gmenu2x->input.setWakeUpInterval(1000);
 
@@ -185,7 +192,7 @@ int Selector::exec(int startSelection) {
 
 
 		gmenu2x->s->clearClipRect();
-		gmenu2x->drawScrollBar(numRows, fl.size(), firstElement, rect);
+		gmenu2x->drawScrollBar(numRows, fl.size(), firstElement, gmenu2x->listRect);
 		gmenu2x->s->flip();
 		
 		bool inputAction = gmenu2x->input.update();
