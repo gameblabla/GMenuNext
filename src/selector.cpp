@@ -94,10 +94,6 @@ int Selector::exec(int startSelection) {
 	drawBottomBar(this->bg);
 	this->bg->box(gmenu2x->listRect, gmenu2x->skinConfColors[COLOR_LIST_BG]);
 
-
-
-
-
 	if (link->getSelectorBrowser()) {
 		gmenu2x->drawButton(this->bg, "a", gmenu2x->tr["Select"],
 			gmenu2x->drawButton(this->bg, "b", gmenu2x->tr["Folder up"],
@@ -155,26 +151,19 @@ int Selector::exec(int startSelection) {
 		if (selected - fl.dirCount() < screens.size() && screens[selected - fl.dirCount()] != "") {
 			gmenu2x->s->box(320 - animation, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
 			gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - animation + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
-			// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - animation, gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
 
 			if (animation < gmenu2x->skinConfInt["selectorX"]) {
 				animation = intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
-				DEBUG("animation: %d", animation);
-
 				gmenu2x->s->flip();
-				gmenu2x->input.setWakeUpInterval(1);
+				gmenu2x->input.setWakeUpInterval(10);
 				continue;
 			}
 		} else {
 			if (animation > 0) {
 				gmenu2x->s->box(320 - animation, gmenu2x->listRect.y, gmenu2x->skinConfInt["selectorX"], gmenu2x->listRect.h, gmenu2x->skinConfColors[COLOR_TOP_BAR_BG]);
-				// gmenu2x->sc[screens[selected - fl.dirCount()]]->blitCenter(gmenu2x->s, 320 - animation + (gmenu2x->skinConfInt["selectorPreviewX"] + gmenu2x->skinConfInt["selectorPreviewWidth"]/2), gmenu2x->skinConfInt["selectorPreviewY"] + gmenu2x->skinConfInt["selectorPreviewHeight"]/2, gmenu2x->skinConfInt["selectorPreviewWidth"], gmenu2x->skinConfInt["selectorPreviewHeight"]);
-
 				animation = gmenu2x->skinConfInt["selectorX"] - intTransition(0, gmenu2x->skinConfInt["selectorX"], tickStart, 100);
 				gmenu2x->s->flip();
-				gmenu2x->input.setWakeUpInterval(1);
-				DEBUG("animation: %d", animation);
-
+				gmenu2x->input.setWakeUpInterval(10);
 				continue;
 			}
 			// animation = 0;

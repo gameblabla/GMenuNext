@@ -448,46 +448,6 @@ void GMenu2X::initLayout() {
 	}
 
 	listRect = (SDL_Rect){0, skinConfInt["topBarHeight"], resX, resY - skinConfInt["bottomBarHeight"] - skinConfInt["topBarHeight"]};
-
-	// Surface *bgmain = new Surface(bg);
-	// sc.add(bgmain,"bgmain");
-
-	//Surface sd("imgs/sd.png", confStr["skin"]);
-	// Surface cpu("imgs/cpu.png", confStr["skin"]);
-	//Surface volume("imgs/volume.png", confStr["skin"]);
-	//string df = getDiskFree();
-
-  //sd.blit( sc["bgmain"], 3, bottomBarIconY );
-	//sc["bgmain"]->write( font, df, 22, bottomBarTextY, HAlignLeft, VAlignMiddle );
-	//volumeX = 27+font->getTextWidth(df);
-	//volume.blit( sc["bgmain"], volumeX, bottomBarIconY );
-	//volumeX += 19;
-	//cpuX = volumeX+font->getTextWidth("1")+5;
- //  cpuX = 3;
-	// cpu.blit( sc["bgmain"], cpuX, bottomBarIconY );
-	// cpuX += 19;
-	// manualX = cpuX+font->getTextWidth("300Mhz")+5;
-
-// #if defined(TARGET_GP2X)
-// 	int serviceX = resX-38;
-// 	if (usbnet) {
-// 		if (web) {
-// 			Surface webserver("imgs/webserver.png", confStr["skin"]);
-// 			webserver.blit( sc["bgmain"], serviceX, bottomBarIconY );
-// 			serviceX -= 19;
-// 		}
-// 		if (samba) {
-// 			Surface sambaS("imgs/samba.png", confStr["skin"]);
-// 			sambaS.blit( sc["bgmain"], serviceX, bottomBarIconY );
-// 			serviceX -= 19;
-// 		}
-// 		if (inet) {
-// 			Surface inetS("imgs/inet.png", confStr["skin"]);
-// 			inetS.blit( sc["bgmain"], serviceX, bottomBarIconY );
-// 			serviceX -= 19;
-// 		}
-// 	}
-// #endif
 }
 
 void GMenu2X::initFont() {
@@ -511,7 +471,7 @@ void GMenu2X::initMenu() {
 	menu = new Menu(this);
 	for (uint i = 0; i < menu->getSections().size(); i++) {
 		//Add virtual links in the applications section
-		if (menu->getSections()[i]=="applications") {
+		if (menu->getSections()[i] == "applications") {
 			menu->addActionLink(i, tr["Explorer"], MakeDelegate(this, &GMenu2X::explorer), tr["Launch an application"], "skin:icons/explorer.png");
 #if !defined(TARGET_PC)
 			if (getBatteryLevel() > 5) // show only if charging
@@ -520,16 +480,16 @@ void GMenu2X::initMenu() {
 		}
 
 		//Add virtual links in the setting section
-		else if (menu->getSections()[i]=="settings") {
+		else if (menu->getSections()[i] == "settings") {
 			menu->addActionLink(i, tr["Settings"], MakeDelegate(this, &GMenu2X::settings), tr["Configure settings"], "skin:icons/configure.png");
 			menu->addActionLink(i, tr["Skin"], MakeDelegate(this, &GMenu2X::skinMenu), tr["Configure skin"], "skin:icons/skin.png");
 			menu->addActionLink(i, tr["Wallpaper"], MakeDelegate(this, &GMenu2X::changeWallpaper), tr["Set background image"], "skin:icons/wallpaper.png");
 #if defined(TARGET_GP2X)
-			if (fwType=="open2x")
+			if (fwType == "open2x")
 				menu->addActionLink(i, "Open2x", MakeDelegate(this, &GMenu2X::settingsOpen2x), tr["Configure Open2x system settings"], "skin:icons/o2xconfigure.png");
 			// menu->addActionLink(i, "TV", MakeDelegate(this, &GMenu2X::toggleTvOut), tr["Activate/deactivate tv-out"], "skin:icons/tv.png");
 			menu->addActionLink(i, "USB SD", MakeDelegate(this, &GMenu2X::activateSdUsb), tr["Activate USB on SD"], "skin:icons/usb.png");
-			if (fwType=="gph" && !f200)
+			if (fwType == "gph" && !f200)
 				menu->addActionLink(i, "USB Nand", MakeDelegate(this, &GMenu2X::activateNandUsb), tr["Activate USB on NAND"], "skin:icons/usb.png");
 			//menu->addActionLink(i, "USB Root", MakeDelegate(this, &GMenu2X::activateRootUsb), tr["Activate USB on the root of the Gp2x Filesystem"], "skin:icons/usb.png");
 			//menu->addActionLink(i, "Speaker", MakeDelegate(this, &GMenu2X::toggleSpeaker), tr["Activate/deactivate Speaker"], "skin:icons/speaker.png");
@@ -1023,9 +983,6 @@ void GMenu2X::main() {
 	// int linkSpacingY = (resY-35 - skinConfInt["sectionBarY"] - linkRows*skinConfInt["sectionBarHeight"])/linkRows;
 	uint sectionLinkPadding = 4; //max(skinConfInt["sectionBarHeight"] - 32 - font->getHeight(), 0) / 3;
 
-	// short int curMMCStatus = MMC_REMOVE;
-	// short int preMMCStatus = MMC_REMOVE;
-
 	bool quit = false;
 	int x = 0, y = 0; //, helpBoxHeight = fwType=="open2x" ? 154 : 139;//, offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6;
 	uint i;
@@ -1042,7 +999,6 @@ void GMenu2X::main() {
 
 #if defined(TARGET_RS97)
 	if (udcConnectedOnBoot == UDC_CONNECT) {
-		// sc[currBackdrop]->blit(s,0,0);
 		checkUDC();
 	}
 #endif
@@ -1109,84 +1065,11 @@ void GMenu2X::main() {
 		// s->box(sectionBarRect.x + sectionBarRect.w - 38, sectionBarRect.y + sectionBarRect.h - 38,16,16, strtorgba("0000ffff"));
 		// s->box(sectionBarRect.x + sectionBarRect.w - 18, sectionBarRect.y + sectionBarRect.h - 38,16,16, strtorgba("ff00ffff"));
 
-
-		// if (tickNow - tickMMC >= 1000) {
-			// TODO: move to hwCheck
-			// tickMMC = tickNow;
-			// curMMCStatus = getMMCStatus();
-			// if (preMMCStatus != curMMCStatus) {
-			// 	if (curMMCStatus == MMC_REMOVE) {
-			// 		system("/usr/bin/umount_ext_sd.sh");
-			// 		INFO("%s: umount external SD from /mnt/ext_sd", __func__);
-			// 	}
-			// 	else if (curMMCStatus == MMC_INSERT) {
-			// 		system("/usr/bin/mount_ext_sd.sh");
-			// 		INFO("%s: mount external SD on /mnt/ext_sd", __func__);
-			// 	}
-			// 	else {
-			// 		WARNING("%s: unexpected MMC status!", __func__);
-			// 	}
-			// 	preMMCStatus = curMMCStatus;
-			// }
-
-			// curUDCStatus = getUDCStatus();
-			// if (preUDCStatus != curUDCStatus) {
-			// 	if (curUDCStatus == UDC_REMOVE) {
-			// 		if (needUSBUmount) {
-			// 			// system("/usr/bin/usb_disconn_int_sd.sh");
-			// 			// system("mount -o remount,rw /dev/mmcblk0p4");
-			// 			system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
-			// 			system("mount /dev/mmcblk0p4 /mnt/int_sd -t vfat -o rw,utf8");
-			// 			INFO("%s, disconnect usbdisk for internal sd", __func__);
-			// 			if (curMMCStatus == MMC_INSERT) {
-			// 				// system("/usr/bin/usb_disconn_ext_sd.sh");
-			// 				system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
-			// 				system("mount /dev/mmcblk1p1 /mnt/ext_sd -t vfat -o rw,utf8 -t vfat -o rw,utf8");
-			// 				INFO("%s, disconnect USB disk for external SD", __func__);
-			// 			}
-			// 			needUSBUmount = 0;
-			// 		}
-			// 	}
-			// 	else if (curUDCStatus == UDC_CONNECT) {
-			// 		MessageBox mb(this, tr["Which action do you want?"], "skin:icons/usb.png");
-			// 		mb.setButton(CONFIRM, tr["USB disk"]);
-			// 		mb.setButton(CANCEL,  tr["Charge only"]);
-			// 		if (mb.exec() == CONFIRM) {
-			// 			needUSBUmount = 1;
-			// 			// system("/usr/bin/usb_conn_int_sd.sh");
-			// 			// system("mount -o remount,ro /dev/mmcblk0p4");
-			// 			system("umount -fl /dev/mmcblk0p4");
-			// 			system("echo '/dev/mmcblk0p4' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
-			// 			INFO("%s, connect USB disk for internal SD", __func__);
-			// 			if (curMMCStatus == MMC_INSERT) {
-			// 				// system("/usr/bin/usb_conn_ext_sd.sh");
-			// 				system("umount -fl /mnt/ext_sd");
-			// 				system("echo '/dev/mmcblk1p1' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
-			// 				INFO("%s, connect USB disk for external SD", __func__);
-			// 			}
-
-			// 			MessageBox mb(this, tr["USB Disk Connected"], "skin:icons/usb.png");
-			// 			mb.setAutoHide(500);
-			// 			mb.exec();
-
-			// 			while (getUDCStatus() == UDC_CONNECT) {
-			// 				SDL_Delay(200);
-			// 			}
-			// 		}
-			// 	}
-			// 	else {
-			// 		WARNING("%s, unexpected USB status!", __func__);
-			// 	}
-			// 	preUDCStatus = curUDCStatus;
-			// 	tickSuspend = SDL_GetTicks(); // prevent immediate suspend
-			// 	continue;
-			// }
-		// }
-
 		currBackdrop = confStr["wallpaper"];
 		if (menu->selLink() != NULL && menu->selLinkApp() != NULL && !menu->selLinkApp()->getBackdropPath().empty() && sc.add(menu->selLinkApp()->getBackdropPath()) != NULL) {
 			currBackdrop = menu->selLinkApp()->getBackdropPath();
 		}
+
 		//Background
 		if (prevBackdrop != currBackdrop) {
 			INFO("New backdrop: %s", currBackdrop.c_str());
@@ -2287,9 +2170,8 @@ void GMenu2X::setCPU(unsigned int mhz) {
 		for (int i = 0; (PWRMODE & 0x8000) && i < 0x100000; i++);
 
 #elif defined(TARGET_RS97)
-		#define CPPCR     (0x10 >> 2)
 		unsigned long m = mhz / 6;
-		memregs[CPPCR] = (m << 24) | 0x090520;
+		memregs[0x10 >> 2] = (m << 24) | 0x090520;
 		INFO("Set CPU clock: %d", mhz);
 #endif
 		setTVOut(TVOut);
@@ -2541,7 +2423,7 @@ void GMenu2X::drawSlider(int val, int min, int max, Surface &icon, Surface &bg) 
 
 #if defined(TARGET_GP2X)
 void GMenu2X::gp2x_tvout_on(bool pal) {
-	if (memdev!=0) {
+	if (memdev != 0) {
 		/*Ioctl_Dummy_t *msg;
 		#define FBMMSP2CTRL 0x4619
 		int TVHandle = ioctl(SDL_videofd, FBMMSP2CTRL, msg);*/
@@ -2696,14 +2578,14 @@ void GMenu2X::applyDefaultTimings() {
 void GMenu2X::setGamma(int gamma) {
 	float fgamma = (float)constrain(gamma,1,100)/10;
 	fgamma = 1 / fgamma;
-	MEM_REG[0x2880>>1]&=~(1<<12);
-	MEM_REG[0x295C>>1]=0;
+	MEM_REG[0x2880>>1] &= ~(1<<12);
+	MEM_REG[0x295C>>1] = 0;
 
-	for (int i=0; i<256; i++) {
+	for (int i = 0; i < 256; i++) {
 		unsigned char g = (unsigned char)(255.0*pow(i/255.0,fgamma));
-		unsigned short s = (g<<8) | g;
-		MEM_REG[0x295E>>1]= s;
-		MEM_REG[0x295E>>1]= g;
+		unsigned short s = (g << 8) | g;
+		MEM_REG[0x295E >> 1] = s;
+		MEM_REG[0x295E >> 1] = g;
 	}
 }
 
