@@ -98,7 +98,6 @@ public:
 	// bool blitRight(Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
 	// bool blitRight(SDL_Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
 
-
 	bool blit(Surface *destination, int x, int y, const Uint8 align = HAlignLeft | VAlignTop, Uint8 alpha=-1);
 	bool blit(Surface *destination, SDL_Rect destrect, const Uint8 align = HAlignLeft | VAlignTop, Uint8 alpha=-1);
 
@@ -111,12 +110,14 @@ public:
 	int box(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 	int box(SDL_Rect, Uint8, Uint8, Uint8);
 	int box(SDL_Rect, RGBAColor);
+
 	int rectangle(Sint16, Sint16, Sint16, Sint16, Uint8, Uint8, Uint8, Uint8);
 	int rectangle(Sint16, Sint16, Sint16, Sint16, Uint8, Uint8, Uint8);
 	int rectangle(Sint16, Sint16, Sint16, Sint16, RGBAColor);
 	int rectangle(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 	int rectangle(SDL_Rect, Uint8, Uint8, Uint8);
 	int rectangle(SDL_Rect, RGBAColor);
+	
 	int hline(Sint16, Sint16, Sint16, Uint8, Uint8, Uint8, Uint8);
 	int hline(Sint16, Sint16, Sint16, RGBAColor);
 
