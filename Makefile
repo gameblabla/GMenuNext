@@ -1,6 +1,7 @@
 TARGET=rs97
 
-CHAINPREFIX=/home/anonymous/Documents/Dev/buildroot-rs97/output/host
+# CHAINPREFIX=/home/anonymous/Documents/Dev/buildroot-rs97/output/host
+CHAINPREFIX=/opt/rs97-toolchain
 CROSS_COMPILE=$(CHAINPREFIX)/usr/bin/mipsel-linux-
 
 BUILDTIME=$(shell date +'\"%Y-%m-%d %H:%M\"')
@@ -18,7 +19,8 @@ CFLAGS = -ggdb -DTARGET_RS97 -DTARGET=$(TARGET) -D__BUILDTIME__="$(BUILDTIME)" -
 CFLAGS += -std=c++11 -fdata-sections -ffunction-sections -fno-exceptions -fno-math-errno -fno-threadsafe-statics
 
 CXXFLAGS = $(CFLAGS)
-LDFLAGS = $(SDL_LIBS) -lfreetype -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL -lpthread
+# LDFLAGS = $(SDL_LIBS) -lfreetype -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL -lpthread
+LDFLAGS = $(SDL_LIBS) -lfreetype -lSDL_image -lSDL_ttf -lSDL -lpthread
 LDFLAGS +=-Wl,--as-needed -Wl,--gc-sections -s
 
 OBJDIR = objs/$(TARGET)
