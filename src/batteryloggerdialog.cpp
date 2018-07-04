@@ -38,7 +38,7 @@ void BatteryLoggerDialog::exec() {
 // 		}
 // 		if (j > 14) break;
 
-// 		DEBUG("COLOR: %d,%d %s = %d", i,j, curr->first.c_str(),  (unsigned short)curr->second.r);
+// 		DEBUG("COLOR: %d,%d %s = %d", i,j, curr->first.c_str(),  (uint16_t)curr->second.r);
 // 		this->bg->box(2+i*10,2+j*10,8,8, curr->second);
 // 	}
 
@@ -47,9 +47,9 @@ void BatteryLoggerDialog::exec() {
 	MessageBox mb(gmenu2x, gmenu2x->tr["Welcome to the Battery Logger.\nMake sure the battery is fully charged.\nAfter pressing OK, leave the device ON until\nthe battery has been fully discharged.\nThe log will be saved in 'battery.csv'."]);
 	mb.exec();
 
-	uint firstRow = 0, rowsPerPage = gmenu2x->listRect.h/gmenu2x->font->getHeight();
+	uint32_t firstRow = 0, rowsPerPage = gmenu2x->listRect.h/gmenu2x->font->getHeight();
 
-	long tickNow = 0, tickStart = SDL_GetTicks(), tickBatteryLogger = -1000000;
+	int32_t tickNow = 0, tickStart = SDL_GetTicks(), tickBatteryLogger = -1000000;
 	string logfile = gmenu2x->getExePath()+"battery.csv";
 
 	char buf[100];
@@ -87,7 +87,7 @@ void BatteryLoggerDialog::exec() {
 
 		this->bg->blit(gmenu2x->s,0,0);
 
-		for (uint i = firstRow; i < firstRow + rowsPerPage && i < log.size(); i++) {
+		for (uint32_t i = firstRow; i < firstRow + rowsPerPage && i < log.size(); i++) {
 			int rowY, j = log.size() - i - 1;
 			if (log.at(j)=="----") { //draw a line
 				rowY = 42 + (int)((i - firstRow + 0.5) * gmenu2x->font->getHeight());

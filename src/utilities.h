@@ -61,7 +61,7 @@ float constrain (float x, float imin, float imax);
 
 bool split (vector<string> &vec, const string &str, const string &delim, bool destructive=true);
 
-int intTransition(int from, int to, long int tickStart, long duration=500, long tickNow=-1);
+int intTransition(int from, int to, int32_t tickStart, int32_t duration = 500, int32_t tickNow = -1);
 
 string exec(const char* cmd);
 string real_path(const string &path);

@@ -110,7 +110,7 @@ struct MenuOption {
 	MenuAction action;
 };
 
-char *ms2hms(unsigned long t, bool mm, bool ss);
+char *ms2hms(uint32_t t, bool mm, bool ss);
 
 class Menu;
 
@@ -125,9 +125,9 @@ private:
 	@return String containing a human readable representation of the free disk space
 	*/
 	string getDiskFree(const char *path);
-	// unsigned short cpuX; //!< Offset for displaying cpu clock information
-	// unsigned short volumeX; //!< Offset for displaying volume level
-	// unsigned short manualX; //!< Offset for displaying the manual indicator in the taskbar
+	// uint16_t cpuX; //!< Offset for displaying cpu clock information
+	// uint16_t volumeX; //!< Offset for displaying volume level
+	// uint16_t manualX; //!< Offset for displaying the manual indicator in the taskbar
 	// void browsePath(const string &path, vector<string>* directories, vector<string>* files);
 	/*!
 	Starts the scanning of the nand and sd filesystems, searching for gpe and gpu files and creating the links in 2 dedicated sections.
@@ -157,8 +157,8 @@ private:
 
 #ifdef TARGET_GP2X
 	typedef struct {
-		unsigned short batt;
-		unsigned short remocon;
+		uint16_t batt;
+		uint16_t remocon;
 	} MMSP2ADC;
 
 	int batteryHandle;
@@ -168,7 +168,7 @@ private:
 		usbnet,
 		samba,
 		web;
-	volatile unsigned short *MEM_REG;
+	volatile uint16_t *MEM_REG;
 	int cx25874; //tv-out
 	void gp2x_tvout_on(bool pal);
 	void gp2x_tvout_off();
@@ -197,9 +197,9 @@ public:
 	/*
 	 * Variables needed for elements disposition
 	 */
-	uint resX, resY, halfX, halfY;
-	// uint bottomBarIconY, bottomBarTextY
-	uint linkColumns, linkRows;
+	uint32_t resX, resY, halfX, halfY;
+	// uint32_t bottomBarIconY, bottomBarTextY
+	uint32_t linkColumns, linkRows;
 	SDL_Rect listRect, linksRect, sectionBarRect;
 	/*!
 	Retrieves the parent directory of GMenu2X.
@@ -212,7 +212,7 @@ public:
 	InputManager input;
 	Touchscreen ts;
 
-	// Uint32 tickSuspend; //, tickPowerOff;
+	// uint32_t tickSuspend; //, tickPowerOff;
 
 	//Configuration hashes
 	ConfStrHash confStr, skinConfStr;
@@ -245,11 +245,11 @@ public:
 	Reads the current battery state and returns a number representing it's level of charge
 	@return A number representing battery charge. 0 means fully discharged. 5 means fully charged. 6 represents a gp2x using AC power.
 	*/
-	unsigned short getBatteryLevel();
-	long getBatteryStatus();
+	uint16_t getBatteryLevel();
+	int32_t getBatteryStatus();
 
 	void skinMenu();
-	uint onChangeSkin();
+	uint32_t onChangeSkin();
 	void initLayout();
 
 	bool inputCommonActions(bool &inputAction);
@@ -287,7 +287,7 @@ public:
 	void contextMenu();
 	void changeWallpaper();
 
-	void setCPU(unsigned int mhz);
+	void setCPU(uint32_t mhz);
 	const string getDateTime();
 	void setDateTime();
 
@@ -317,7 +317,7 @@ public:
 	int drawButton(Button *btn, int x=5, int y=-10);
 	int drawButton(Surface *s, const string &btn, const string &text, int x=5, int y=-10);
 	int drawButtonRight(Surface *s, const string &btn, const string &text, int x=5, int y=-10);
-	void drawScrollBar(uint pagesize, uint totalsize, uint pagepos, SDL_Rect scrollRect);
+	void drawScrollBar(uint32_t pagesize, uint32_t totalsize, uint32_t pagepos, SDL_Rect scrollRect);
 
 	Menu* menu;
 };

@@ -1,6 +1,6 @@
 TARGET=rs97
 
-CHAINPREFIX=/opt/rs97-toolchain
+CHAINPREFIX=/home/anonymous/Documents/Dev/buildroot-rs97/output/host
 CROSS_COMPILE=$(CHAINPREFIX)/usr/bin/mipsel-linux-
 
 BUILDTIME=$(shell date +'\"%Y-%m-%d %H:%M\"')
@@ -13,7 +13,7 @@ SYSROOT     := $(CHAINPREFIX)/usr/mipsel-buildroot-linux-uclibc/sysroot
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
-CFLAGS = -ggdb -DTARGET_RS97 -DTARGET=$(TARGET) -D__BUILDTIME__="$(BUILDTIME)" -DLOG_LEVEL=3 -g3 $(SDL_CFLAGS) -I$(CHAINPREFIX)/usr/include/ -I$(SYSROOT)/usr/include/  -I$(SYSROOT)/usr/include/SDL/ -mhard-float -mips32 -mno-mips16
+CFLAGS = -ggdb -DTARGET_RS97 -DTARGET=$(TARGET) -D__BUILDTIME__="$(BUILDTIME)" -DLOG_LEVEL=4 -g3 $(SDL_CFLAGS) -I$(CHAINPREFIX)/usr/include/ -I$(SYSROOT)/usr/include/  -I$(SYSROOT)/usr/include/SDL/ -mhard-float -mips32 -mno-mips16
 # -fno-rtti
 CFLAGS += -std=c++11 -fdata-sections -ffunction-sections -fno-exceptions -fno-math-errno -fno-threadsafe-statics
 
