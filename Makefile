@@ -1,7 +1,7 @@
 TARGET=rs97
 
-CHAINPREFIX=/home/anonymous/Documents/Dev/buildroot-rs97/output/host
-# CHAINPREFIX=/opt/rs97-toolchain
+#CHAINPREFIX=/home/anonymous/Documents/Dev/buildroot-rs97/output/host
+CHAINPREFIX=/opt/rs97-toolchain
 CROSS_COMPILE=$(CHAINPREFIX)/usr/bin/mipsel-linux-
 
 BUILDTIME=$(shell date +'\"%Y-%m-%d %H:%M\"')
