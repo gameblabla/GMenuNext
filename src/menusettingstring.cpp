@@ -25,10 +25,10 @@ using std::string;
 using fastdelegate::MakeDelegate;
 
 MenuSettingString::MenuSettingString(
-		GMenu2X *gmenu2x, const string &name,
+		GMenu2X *gmenu2x, const string &title,
 		const string &description, string *value,
 		const string &diagTitle_, const string &diagIcon_)
-	: MenuSettingStringBase(gmenu2x, name, description, value)
+	: MenuSettingStringBase(gmenu2x, title, description, value)
 	, diagTitle(diagTitle_)
 	, diagIcon(diagIcon_)
 {

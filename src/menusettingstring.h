@@ -29,7 +29,7 @@ protected:
 	std::string diagTitle, diagIcon;
 
 public:
-	MenuSettingString(GMenu2X *gmenu2x, const std::string &name,
+	MenuSettingString(GMenu2X *gmenu2x, const std::string &title,
 					  const std::string &description, std::string *value,
 					  const std::string &diagTitle = "",
 					  const std::string &diagIcon = "");
