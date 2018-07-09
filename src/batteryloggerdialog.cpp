@@ -9,8 +9,6 @@ BatteryLoggerDialog::BatteryLoggerDialog(GMenu2X *gmenu2x, const string &title, 
 }
 
 void BatteryLoggerDialog::exec() {
-	// gmenu2x->initBG();
-
 	bool close = false;
 
 	drawTopBar(this->bg, title, description, icon);
@@ -27,20 +25,6 @@ void BatteryLoggerDialog::exec() {
 
 	gmenu2x->setBacklight(100);
 	gmenu2x->setCPU(gmenu2x->confInt["cpuMax"]);
-
-// // skinConfColor
-// 	int i = 0, j = 0;
-// 	for(ConfColorHash::iterator curr = skinConfColor.begin(); curr != skinConfColor.end(); curr++) {
-// 		i++;
-// 		if (i > 31) {
-// 			j++;
-// 			i=0;
-// 		}
-// 		if (j > 14) break;
-
-// 		DEBUG("COLOR: %d,%d %s = %d", i,j, curr->first.c_str(),  (uint16_t)curr->second.r);
-// 		this->bg->box(2+i*10,2+j*10,8,8, curr->second);
-// 	}
 
 	gmenu2x->s->flip();
 

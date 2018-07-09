@@ -6,14 +6,9 @@ ImageViewerDialog::ImageViewerDialog(GMenu2X *gmenu2x, const string &title, cons
 {}
 
 void ImageViewerDialog::exec() {
-	// gmenu2x->initBG();
-
 	Surface pngman(manual);
 
-	// string pageStatus;
-
 	bool close = false, repaint = true;
-	// int page=0, pagecount=pngman.raw->w/320;
 
 	int offsetX = 0, offsetY = 0;
 
@@ -34,7 +29,6 @@ void ImageViewerDialog::exec() {
 
 	while (!close) {
 		bool inputAction = gmenu2x->input.update();
-		// if (gmenu2x->powerManager(inputAction) || gmenu2x->inputCommonActions(inputAction)) { repaint = true; continue; };
 		if (gmenu2x->inputCommonActions(inputAction)) { repaint = true; continue; };
 
 		if (repaint) {
