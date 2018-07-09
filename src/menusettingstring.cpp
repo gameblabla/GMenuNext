@@ -27,10 +27,10 @@ using fastdelegate::MakeDelegate;
 MenuSettingString::MenuSettingString(
 		GMenu2X *gmenu2x, const string &title,
 		const string &description, string *value,
-		const string &diagTitle_, const string &diagIcon_)
+		const string &dialogTitle, const string &dialogIcon)
 	: MenuSettingStringBase(gmenu2x, title, description, value)
-	, diagTitle(diagTitle_)
-	, diagIcon(diagIcon_)
+	, dialogTitle(dialogTitle)
+	, dialogIcon(dialogIcon)
 {
 	IconButton *btn;
 
@@ -45,6 +45,6 @@ MenuSettingString::MenuSettingString(
 
 void MenuSettingString::edit()
 {
-	InputDialog id(gmenu2x, gmenu2x->ts, description, value(), diagTitle, diagIcon);
+	InputDialog id(gmenu2x, gmenu2x->ts, description, value(), dialogTitle, dialogIcon);
 	if (id.exec()) setValue(id.getInput());
 }
