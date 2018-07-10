@@ -382,14 +382,11 @@ GMenu2X::GMenu2X() {
 
 void GMenu2X::main() {
 	pthread_t thread_id;
-	// uint32_t linksPerPage = linkColumns*linkRows;
-	// int linkSpacingX = (resX-10 - linkColumns*(resX - skinConfInt["sectionBarX"]))/linkColumns;
-	// int linkSpacingY = (resY-35 - skinConfInt["sectionBarY"] - linkRows*skinConfInt["sectionBarHeight"])/linkRows;
-	uint32_t sectionLinkPadding = 4; //max(skinConfInt["sectionBarHeight"] - 32 - font->getHeight(), 0) / 3;
+	uint32_t sectionLinkPadding = 4;
 
 	bool quit = false;
-	int i = 0, x = 0, y = 0, ix = 0, iy = 0; //, helpBoxHeight = fwType=="open2x" ? 154 : 139;//, offset = menu->sectionLinks()->size()>linksPerPage ? 2 : 6;
-	uint32_t tickBattery = -4800, tickNow, tickMMC = 0; //, tickUSB = 0;
+	int i = 0, x = 0, y = 0, ix = 0, iy = 0;
+	uint32_t tickBattery = -4800, tickNow; //, tickMMC = 0; //, tickUSB = 0;
 	string prevBackdrop = confStr["wallpaper"], currBackdrop = confStr["wallpaper"];
 
 	int8_t brightnessIcon = 5;
@@ -423,8 +420,6 @@ void GMenu2X::main() {
 			*iconManual = sc.skinRes("imgs/manual.png"),
 			*iconCPU = sc.skinRes("imgs/cpu.png"),
 			*iconMenu = sc.skinRes("imgs/menu.png");
-
-	// stringstream ss;
 
 	if (pthread_create(&thread_id, NULL, mainThread, this)) {
 		ERROR("%s, failed to create main thread\n", __func__);
@@ -481,8 +476,6 @@ void GMenu2X::main() {
 			ix = linksRect.x;
 			for (y = 0; y < linkRows && i < menu->sectionLinks()->size(); y++, i++) {
 				iy = linksRect.y + y * linkHeight; // + (y + 1) * sectionLinkPadding;
-				// s->setClipRect({ix, iy, linkWidth, linkHeight});
-				// menu->sectionLinks()->at(i)->setPosition(x,y);
 
 				if (i == (uint32_t)menu->selLinkIndex())
 					s->box(ix, iy, linksRect.w, linkHeight, skinConfColors[COLOR_SELECTION_BG]);
@@ -498,7 +491,6 @@ void GMenu2X::main() {
 					iy = linksRect.y + y * linkHeight + sectionLinkPadding + (y + 1);
 
 					s->setClipRect({ix, iy, linkWidth, linkHeight});
-					// menu->sectionLinks()->at(i)->setPosition(x,y);
 		
 					if (i == (uint32_t)menu->selLinkIndex())
 						s->box(ix, iy, linkWidth, linkHeight, skinConfColors[COLOR_SELECTION_BG]);
@@ -945,7 +937,6 @@ void GMenu2X::initMenu() {
 			//menu->addActionLink(i, "USB Root", MakeDelegate(this, &GMenu2X::activateRootUsb), tr["Activate USB on the root of the Gp2x Filesystem"], "skin:icons/usb.png");
 			//menu->addActionLink(i, "Speaker", MakeDelegate(this, &GMenu2X::toggleSpeaker), tr["Activate/deactivate Speaker"], "skin:icons/speaker.png");
 #elif defined(TARGET_RS97)
-			// menu->addActionLink(i, tr["TV"], MakeDelegate(this, &GMenu2X::toggleTvOut), tr["Activate/deactivate tv-out"], "skin:icons/tv.png");
 			//menu->addActionLink(i, "Format", MakeDelegate(this, &GMenu2X::formatSd), tr["Format internal SD"], "skin:icons/format.png");
 			menu->addActionLink(i, tr["Umount"], MakeDelegate(this, &GMenu2X::umountSdDialog), tr["Umount external SD"], "skin:icons/eject.png");
 #endif
@@ -1036,7 +1027,6 @@ void GMenu2X::settings() {
 		if (curGlobalVolume != confInt["globalVolume"]) setVolume(confInt["globalVolume"]);
 
 		if (lang == "English") lang = "";
-		// if (lang != tr.lang()) tr.setLang(lang);
 		if (confStr["lang"] != lang) {
 			confStr["lang"] = lang;
 			tr.setLang(lang);
@@ -1069,19 +1059,17 @@ void GMenu2X::settings() {
 	}
 }
 
-
-
 void GMenu2X::resetSettings() {
 	bool	reset_gmenu = true, 
 			reset_skin = true, 
-			reset_icon = true, 
+			reset_icon = false, 
 			reset_manual = false, 
 			reset_parameter = false, 
 			reset_backdrop = true,
 			reset_filter = false,
 			reset_directory = false,
 			reset_preview = false,
-			reset_cpu = true;
+			reset_cpu = false;
 
 	string tmppath = "";
 
@@ -1209,17 +1197,11 @@ void GMenu2X::readConfig() {
 	evalIntConf( &confInt["backlightTimeout"], 30, 10, 300);
 	evalIntConf( &confInt["powerTimeout"], 10, 1, 300);
 	evalIntConf( &confInt["outputLogs"], 0, 0, 1 );
-// #if defined(TARGET_GP2X)
-// 	evalIntConf( &confInt["cpuMax"], 300, 200, 300 );
-// 	evalIntConf( &confInt["cpuMenu"], 140, 50, 300 );
-// #elif defined(TARGET_WIZ) || defined(TARGET_CAANOO)
-// 	evalIntConf( &confInt["cpuMax"], 900, 200, 900 );
-// 	evalIntConf( &confInt["cpuMenu"], CPU_CLK_DEFAULT, 250, 300 );
-// #elif defined(TARGET_RS97)
+
 	evalIntConf( &confInt["cpuMax"], 642, 200, 1200 );
 	evalIntConf( &confInt["cpuMin"], 318, 200, 1200 );
 	evalIntConf( &confInt["cpuMenu"], 528, 200, 1200 );
-// #endif
+
 	evalIntConf( &confInt["globalVolume"], 60, 1, 100 );
 	evalIntConf( &confInt["gamma"], 10, 1, 100 );
 	evalIntConf( &confInt["videoBpp"], 16, 8, 32 );
@@ -1433,9 +1415,7 @@ void GMenu2X::skinMenu() {
 	writeSkinConfig();
 	writeConfig();
 
-	// setSkin(confStr["skin"], true, true);
 	if (curSkin != confStr["skin"]) restartDialog();
-	// initBG();
 }
 
 void GMenu2X::about() {
@@ -1544,14 +1524,10 @@ void GMenu2X::showManual() {
 }
 
 void GMenu2X::explorer() {
-	// DirDialog dd(gmenu2x, description, _value);
 	BrowseDialog fd(this, tr["Explorer"], tr["Select a file or application"]);
 	fd.showDirectories = true;
 	fd.showFiles = true;
-	// fd.setFilter(".dge,.gpu,.gpe,.sh,.bin,.elf,");
-	// dd.setPath(_value);
-	// if (dd.exec()) setValue( dd.getPath() );
-	// FileDialog fd(this, tr["Select an application"], ".gpu,.gpe,.sh,", "", tr["Explorer"]);
+
 	bool loop = true;
 	while (fd.exec() && loop) {
 		string ext = fd.getExt();
@@ -1756,16 +1732,11 @@ void GMenu2X::checkUDC() {
 		mb.setButton(CONFIRM, tr["USB Drive"]);
 		mb.setButton(CANCEL,  tr["Charger"]);
 		if (mb.exec() == CONFIRM) {
-			// needUSBUmount = 1;
-			// system("/usr/bin/usb_conn_int_sd.sh");
-			// system("mount -o remount,ro /dev/mmcblk0p4");
 			system("umount -fl /dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4");
 			system("echo \"/dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4\" > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
 			INFO("%s, connect USB disk for internal SD", __func__);
 
 			if (getMMCStatus() == MMC_INSERT) {
-				// system("/usr/bin/usb_conn_ext_sd.sh");
-				// system("umount -fl /mnt/ext_sd");
 				umountSd();
 				system("echo '/dev/mmcblk$(( $(readlink /dev/root | head -c -3 | tail -c1) ^ 1 ))p1' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
 				INFO("%s, connect USB disk for external SD", __func__);
@@ -1785,7 +1756,6 @@ void GMenu2X::checkUDC() {
 			}
 
 			system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
-
 			system("mount /dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4 /mnt/int_sd -t vfat -o rw,utf8");
 			INFO("%s, disconnect usbdisk for internal sd", __func__);
 			if (getMMCStatus() == MMC_INSERT) {
@@ -1845,11 +1815,8 @@ void GMenu2X::contextMenu() {
 	box.x = halfX - box.w / 2;
 	box.y = halfY - box.h / 2;
 
-	SDL_Rect selbox = {box.x + 4, 0, box.w - 8, h};
 	uint32_t tickStart = SDL_GetTicks();
-
 	input.setWakeUpInterval(45);
-
 	while (!close) {
 		bg.blit(s, 0, 0);
 
@@ -1858,10 +1825,10 @@ void GMenu2X::contextMenu() {
 		s->rectangle( box.x + 2, box.y + 2, box.w - 4, box.h - 4, skinConfColors[COLOR_MESSAGE_BOX_BORDER] );
 
 		//draw selection rect
-		selbox.y = box.y + 4 + h * sel;
-		s->box( selbox.x, selbox.y, selbox.w, selbox.h, skinConfColors[COLOR_MESSAGE_BOX_SELECTION] );
+		s->box( box.x + 4, box.y + 4 + h * sel, box.w - 8, h, skinConfColors[COLOR_MESSAGE_BOX_SELECTION] );
 		for (i = 0; i < voices.size(); i++)
 			s->write( font, voices[i].text, box.x + 12, box.y + h2 + 3 + h * i, VAlignMiddle, skinConfColors[COLOR_FONT_ALT], skinConfColors[COLOR_FONT_ALT_OUTLINE]);
+
 		s->flip();
 
 		if (fadeAlpha < 200) {
@@ -1869,36 +1836,6 @@ void GMenu2X::contextMenu() {
 			continue; 
 		}
 
-#if defined(TARGET_GP2X)
-		//touchscreen
-		if (f200) {
-			ts.poll();
-			if (ts.released()) {
-				if (!ts.inRect(box))
-					close = true;
-				else if (ts.getX() >= selbox.x
-					&& ts.getX() <= selbox.x + selbox.w)
-					for (i=0; i<voices.size(); i++) {
-						selbox.y = box.y+4+h*i;
-						if (ts.getY() >= selbox.y
-							&& ts.getY() <= selbox.y + selbox.h) {
-							voices[i].action();
-						close = true;
-						i = voices.size();
-					}
-				}
-			} else if (ts.pressed() && ts.inRect(box)) {
-				for (i=0; i<voices.size(); i++) {
-					selbox.y = box.y+4+h*i;
-					if (ts.getY() >= selbox.y
-						&& ts.getY() <= selbox.y + selbox.h) {
-						sel = i;
-					i = voices.size();
-					}
-				}
-			}
-		}
-#endif
 		// input.setWakeUpInterval(0);
 
 		bool inputAction = input.update();
