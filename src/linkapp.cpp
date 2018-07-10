@@ -139,7 +139,7 @@ const string &LinkApp::searchManual() {
 	if (pos != string::npos) filename = exec.substr(0, pos);
 	filename += ".man.txt";
 
-	string dname = dir_name(exec) + "/"; 
+	string dname = dir_name(exec) + "/";
 
 	string dirtitle = dname + base_name(dir_name(exec)) + ".man.txt";
 	string linktitle = base_name(file);
@@ -317,7 +317,7 @@ void LinkApp::selector(int startSelection, const string &selectorDir) {
 
 void LinkApp::launch(const string &selectedFile, const string &selectedDir) {
 	save();
-  
+
 	//Set correct working directory
 	string wd = getRealWorkdir();
 	if (!wd.empty())
@@ -379,7 +379,7 @@ void LinkApp::launch(const string &selectedFile, const string &selectedDir) {
 	// if (wrapper) command += "; sync & cd " + cmdclean(gmenu2x->getExePath()) + "; exec ./gmenu2x";
 	// if (dontleave) {
 		// system(command.c_str());
-	// } else 
+	// } else
 	{
 		if (gmenu2x->confInt["saveSelection"] && (gmenu2x->confInt["section"] != gmenu2x->menu->selSectionIndex() || gmenu2x->confInt["link"] != gmenu2x->menu->selLinkIndex())) {
 			gmenu2x->writeConfig();
