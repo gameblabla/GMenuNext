@@ -491,10 +491,10 @@ void GMenu2X::main() {
 					iy = linksRect.y + y * linkHeight + sectionLinkPadding + (y + 1);
 
 					s->setClipRect({ix, iy, linkWidth, linkHeight});
-		
+
 					if (i == (uint32_t)menu->selLinkIndex())
 						s->box(ix, iy, linkWidth, linkHeight, skinConfColors[COLOR_SELECTION_BG]);
-		
+
 					sc[menu->sectionLinks()->at(i)->getIconPath()]->blit(s, {ix, iy - sectionLinkPadding, linkWidth, linkHeight}, HAlignCenter | VAlignMiddle);
 
 					s->write(font, tr.translate(menu->sectionLinks()->at(i)->getTitle()), ix + linkWidth/2, iy + linkHeight - 2, HAlignCenter | VAlignBottom);
@@ -755,12 +755,12 @@ bool GMenu2X::inputCommonActions(bool &inputAction) {
 #endif
 		}
 	}
-	
+
 	input[MENU] = wasActive; // Key was active but no combo was pressed
 
 	if ( input[BACKLIGHT] ) {
 		setBacklight(confInt["backlight"], true);
-		return true; 
+		return true;
 	}
 
 	return false;
@@ -1640,7 +1640,7 @@ bool GMenu2X::saveScreenshot() {
 	ledOn();
 	uint32_t x = 0;
 	string fname;
-	
+
 	mkdir("screenshots/", 0777);
 
 	do {
@@ -1833,14 +1833,14 @@ void GMenu2X::contextMenu() {
 
 		if (fadeAlpha < 200) {
 			fadeAlpha = intTransition(0, 200, tickStart, 200);
-			continue; 
+			continue;
 		}
 		// input.setWakeUpInterval(0);
 		do {
 			inputAction = input.update();
-	
+
 			if (inputCommonActions(inputAction)) continue;
-	
+
 			if ( input[MENU] || input[CANCEL]) close = true;
 			else if ( input[UP] ) sel = (sel - 1 < 0) ? (int)voices.size() - 1 : sel - 1 ;
 			else if ( input[DOWN] ) sel = (sel + 1 > (int)voices.size() - 1) ? 0 : sel + 1;
