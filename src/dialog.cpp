@@ -11,7 +11,6 @@ Dialog::~Dialog() {
 	delete bg;
 }
 
-
 void Dialog::drawTitleIcon(const std::string &icon, Surface *s) {
 	if (s == NULL) s = gmenu2x->s;
 
