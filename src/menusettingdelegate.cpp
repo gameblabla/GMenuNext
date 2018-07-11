@@ -20,13 +20,6 @@
 #include "menusettingdelegate.h"
 #include "gmenu2x.h"
 #include "iconbutton.h"
-#include "FastDelegate.h"
-
-#include <algorithm>
-
-using std::find;
-using std::string;
-using std::vector;
 
 MenuSettingDelegate::MenuSettingDelegate(GMenu2X *gmenu2x, const std::string &title,
 	const std::string &description, const std::string &_value, msd_callback_t callback)
@@ -47,15 +40,10 @@ uint32_t MenuSettingDelegate::manageInput() {
 	return 0; // SD_NO_ACTION
 }
 
-
 void MenuSettingDelegate::drawSelected(int y) {
 	MenuSetting::drawSelected(y);
 }
 
 bool MenuSettingDelegate::edited() {
 	return false;
-}
-
-string MenuSettingDelegate::value() {
-	return "";
 }

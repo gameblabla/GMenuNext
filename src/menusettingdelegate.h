@@ -22,15 +22,10 @@
 
 #include "menusetting.h"
 
-// #include <vector>
-#include "debug.h"
-
 #include "FastDelegate.h"
-using namespace fastdelegate;
 using fastdelegate::MakeDelegate;
 
 typedef FastDelegate0<> msd_callback_t;
-
 
 class MenuSettingDelegate : public MenuSetting {
 protected:
@@ -40,20 +35,12 @@ protected:
 public:
 	virtual ~MenuSettingDelegate() {}
 	MenuSettingDelegate(GMenu2X *gmenu2x, const std::string &title,
-					  const std::string &description, const std::string &value,
-					  msd_callback_t cbOnChange);
-	// virtual void draw(int y);
+		const std::string &description, const std::string &value,
+		msd_callback_t cbOnChange);
 	virtual void drawSelected(int y);
-	// virtual bool edited() = 0;
-
 	virtual void draw(int y);
 	virtual uint32_t manageInput();
-	// virtual void adjustInput();
-	// virtual void drawSelected(int y);
 	virtual bool edited();
-
-	// uint32_t voidAction();
-	std::string value();
 };
 
 #endif
