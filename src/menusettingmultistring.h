@@ -50,12 +50,12 @@ public:
 	MenuSettingMultiString(
 			GMenu2X *gmenu2x, const std::string &title,
 			const std::string &description, std::string *value,
-			const std::vector<std::string> *choices);
+			const std::vector<std::string> *choices, msms_callback_t cbOnChange = 0);
 
-	MenuSettingMultiString(
-			GMenu2X *gmenu2x, const std::string &title,
-			const std::string &description, std::string *value,
-			const std::vector<std::string> *choices, msms_callback_t cbOnChange);
+	// MenuSettingMultiString(
+	// 		GMenu2X *gmenu2x, const std::string &title,
+	// 		const std::string &description, std::string *value,
+	// 		const std::vector<std::string> *choices, msms_callback_t cbOnChange);
 
 	uint32_t voidAction() { return 0; };
 
