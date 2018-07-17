@@ -23,8 +23,6 @@
 #include "buttonbox.h"
 #include "iconbutton.h"
 
-// #include <string>
-
 /**
 Base class for different kind of option
 
