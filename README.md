@@ -10,6 +10,26 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
 ## Changelog
+**2018.07.XX** (*Codename: .*)
+* Updated Selector screen previews;
+* Remove SDL_gfx dependecies by importing gmenu2x-gcw0 surface methods;
+* Set default cpuMin to 342MHz;
+* Unify file browser routines;
+* File Explorer:
+	* Support image preview;
+	* View image files in ImageDialog;
+	* View text files in TextDialog;
+* Settings:
+	* Add color switch for bool items;
+	* New menu type allow submenus;
+	* Add Factory Reset sub menu;
+	* Reorder menu items;
+	* Merge wallpaper and appearance settings into Skin menu;
+* Auto detect Headphones;
+* Auto detect external SD Card;
+* Batch of internal changes, bug fixes and optimizations.
+
+## Changelog
 **2018.07.02** (*Codename: Blast Processing.*)
 * Fix memory address register:
 	* Fix SetCPU not setting CPU clock;
