@@ -248,18 +248,17 @@ The fields logged are:
 
 ## Controls
 
-* A, Stick press: Launch selected link / Confirm action;
-* B: Cancel action;
-* X, Stick left: Goes up one directory in file browser;
+* A: Launch selected link / Confirm action;
+* B: Cancel action / Goes up one directory in file browser;
 * Y: Bring up the manual/readme;
 * L, R: Switch between sections / PageUp/PageDown on lists;
-* START: GMenu2X options;
+* START: GMenu2X settings;
 * SELECT: Bring up the contextual menu;
 * SELECT + L: Volume control;
 * SELECT + R: Take a screenshot;
 * BRIGHTNESS: Change screen brightness;
 * POWER: Toggle Suspend mode;
-* POWER hold: Bring up Poweroff dialog.
+* POWER (hold): Bring up Poweroff dialog.
 * TV-Out: (Dis)Connect the TV-out plug to toggle TV-out signal.
 
 
