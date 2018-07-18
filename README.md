@@ -9,8 +9,10 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 
 (Re)Boot your device and enjoy [GMenuNext](https://github.com/pingflood/GMenuNext/).
 
+
 ## Changelog
-**2018.07.XX** (*Codename: .*)
+
+**2018.07.18** (*Codename: Low Carb.*)
 * Updated Selector screen previews;
 * Remove SDL_gfx dependecies by importing gmenu2x-gcw0 surface methods;
 * Set default cpuMin to 342MHz;
@@ -29,7 +31,6 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 * Auto detect external SD Card;
 * Batch of internal changes, bug fixes and optimizations.
 
-## Changelog
 **2018.07.02** (*Codename: Blast Processing.*)
 * Fix memory address register:
 	* Fix SetCPU not setting CPU clock;
@@ -121,8 +122,6 @@ Unpack the latest [Release](https://github.com/pingflood/GMenuNext/releases/) ov
 * Improvements in backlight slider;
 * Batch of internal changes and bug fixes.
 
-
-## Changelog
 **2018.05.12** (*Codename: Any color you like.*)
 * Realtime preview of Skin changes;
 * Allow customize dimensions in Skin settings;
