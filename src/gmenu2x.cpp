@@ -26,8 +26,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-// #include <SDL.h>
-// #include <SDL_gfxPrimitives.h>
 #include <signal.h>
 
 #include <sys/statvfs.h>
@@ -45,11 +43,9 @@
 #include <linux/soundcard.h>
 
 #include "linkapp.h"
-// #include "linkaction.h"
 #include "menu.h"
 #include "fonthelper.h"
 #include "surface.h"
-// #include "filedialog.h"
 #include "browsedialog.h"
 #include "powermanager.h"
 #include "gmenu2x.h"

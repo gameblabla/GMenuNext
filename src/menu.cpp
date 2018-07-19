@@ -180,8 +180,6 @@ bool Menu::addActionLink(uint32_t section, const string &title, fastdelegate::Fa
 	if (section >= sections.size()) return false;
 
 	Link *linkact = new Link(gmenu2x, action);
-	// linkact->setSize(gmenu2x->resX - gmenu2x->linksRect.w, gmenu2x->skinConfInt["linkItemHeight"]);
-	// linkact->setSize(gmenu2x->linksRect.w, gmenu2x->skinConfInt["linkItemHeight"]);
 	linkact->setTitle(title);
 	linkact->setDescription(description);
 	if (gmenu2x->sc.exists(icon) || (icon.substr(0,5) == "skin:" && !gmenu2x->sc.getSkinFilePath(icon.substr(5, icon.length())).empty()) || fileExists(icon))
@@ -470,8 +468,6 @@ void Menu::readLinks() {
 		sort(linkfiles.begin(), linkfiles.end(),case_less());
 		for (uint32_t x = 0; x < linkfiles.size(); x++) {
 			LinkApp *link = new LinkApp(gmenu2x, gmenu2x->input, linkfiles[x].c_str());
-			// link->setSize(gmenu2x->resX - gmenu2x->linksRect.w, gmenu2x->skinConfInt["linkItemHeight"]);
-			// link->setSize(gmenu2x->linksRect.w, gmenu2x->skinConfInt["linkItemHeight"]);
 			if (link->targetExists())
 				links[i].push_back( link );
 			else

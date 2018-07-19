@@ -18,12 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-// #include <SDL.h>
-// #include <SDL_gfxPrimitives.h>
-
 #include "settingsdialog.h"
 #include "messagebox.h"
-// #include "debug.h"
 
 using namespace std;
 
@@ -68,12 +64,6 @@ bool SettingsDialog::exec() {
 		//Selection
 		if (selected >= firstElement + numRows) firstElement = selected - numRows;
 		if (selected < firstElement) firstElement = selected;
-		// iY = selected - firstElement;
-		// iY = gmenu2x->listRect.y + (iY * rowHeight) + 1;
-		// if (ts_pressed && !ts.pressed()) ts_pressed = false;
-		// if (gmenu2x->f200 && ts.pressed() && !ts.inRect(gmenu2x->listRect)) ts_pressed = false;
-
-		//selected option
 
 		iY = gmenu2x->listRect.y + 1;
 		for (i = firstElement; i < voices.size() && i <= firstElement + numRows; i++, iY += rowHeight) {
@@ -82,7 +72,6 @@ bool SettingsDialog::exec() {
 				voices[selected]->drawSelected(iY);
 			}
 			voices[i]->draw(iY);
-			// iY += rowHeight;
 		}
 
 		gmenu2x->drawScrollBar(numRows, voices.size(), firstElement, gmenu2x->listRect);

@@ -60,12 +60,6 @@ public:
 	virtual ~Link() {};
 	void updateSurfaces();
 
-	// virtual void paint();
-	// virtual bool paintHover();
-
-	// void setSize(int w, int h);
-	// void setPosition(int x, int y);
-
 	const string &getTitle();
 	void setTitle(const string &title);
 	const string &getDescription();

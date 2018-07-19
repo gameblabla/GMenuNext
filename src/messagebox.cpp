@@ -20,14 +20,11 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-// #include <SDL.h>
-// #include <SDL_gfxPrimitives.h>
 
 #include "messagebox.h"
 #include "debug.h"
 
 #include "powermanager.h"
-// #include "gmenu2x.h"
 
 
 using namespace std;

@@ -94,29 +94,13 @@ public:
 	void blendAdd(Surface*, int,int);
 
 	void clearClipRect();
-	// void setClipRect(int x, int y, int w, int h);
 	void setClipRect(SDL_Rect rect);
-
-	// bool blit(Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
-	// bool blit(Surface *destination, SDL_Rect container, const uint16_t halign=0, const uint16_t valign=0);
-	// bool blit(SDL_Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
-	// bool blitCenter(Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
-	// bool blitCenter(SDL_Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
-	// bool blitRight(Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
-	// bool blitRight(SDL_Surface *destination, int x, int y, int w=0, int h=0, int a=-1);
 
 	bool blit(Surface *destination, int x, int y, const uint8_t align = HAlignLeft | VAlignTop, uint8_t alpha=-1);
 	bool blit(Surface *destination, SDL_Rect destrect, const uint8_t align = HAlignLeft | VAlignTop, uint8_t alpha=-1);
 
 	void write(FontHelper *font, const string &text, int x, int y, const uint8_t align = HAlignLeft | VAlignTop);
 	void write(FontHelper *font, const string &text, int x, int y, const uint8_t align, RGBAColor fgColor, RGBAColor bgColor);
-
-	// int box(int16_t, int16_t, int16_t, int16_t, uint8_t, uint8_t, uint8_t, uint8_t);
-	// int box(int16_t, int16_t, int16_t, int16_t, uint8_t, uint8_t, uint8_t);
-	// int box(int16_t, int16_t, int16_t, int16_t, RGBAColor);
-	// int box(SDL_Rect, uint8_t, uint8_t, uint8_t, uint8_t);
-	// int box(SDL_Rect, uint8_t, uint8_t, uint8_t);
-	// int box(SDL_Rect, RGBAColor);
 
 	void box(SDL_Rect re, RGBAColor c);
 	void box(Sint16 x, Sint16 y, Uint16 w, Uint16 h, RGBAColor c) {
@@ -135,14 +119,6 @@ public:
 	  */
 	void applyClipRect(SDL_Rect& rect);
 
-
-	// int rectangle(int16_t, int16_t, int16_t, int16_t, uint8_t, uint8_t, uint8_t, uint8_t);
-	// int rectangle(int16_t, int16_t, int16_t, int16_t, uint8_t, uint8_t, uint8_t);
-	// int rectangle(int16_t, int16_t, int16_t, int16_t, RGBAColor);
-	// int rectangle(SDL_Rect, uint8_t, uint8_t, uint8_t, uint8_t);
-	// int rectangle(SDL_Rect, uint8_t, uint8_t, uint8_t);
-	// int rectangle(SDL_Rect, RGBAColor);
-
 	void rectangle(SDL_Rect re, RGBAColor c);
 	void rectangle(Sint16 x, Sint16 y, Uint16 w, Uint16 h, RGBAColor c) {
 		rectangle((SDL_Rect){ x, y, w, h }, c);
@@ -150,9 +126,6 @@ public:
 	void rectangle(Sint16 x, Sint16 y, Uint16 w, Uint16 h, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 		rectangle((SDL_Rect){ x, y, w, h }, RGBAColor(r, g, b, a));
 	}
-
-	// int hline(int16_t, int16_t, int16_t, uint8_t, uint8_t, uint8_t, uint8_t);
-	// int hline(int16_t, int16_t, int16_t, RGBAColor);
 
 	void operator = (SDL_Surface*);
 	void operator = (Surface*);

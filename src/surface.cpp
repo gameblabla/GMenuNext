@@ -275,33 +275,6 @@ void Surface::operator = (Surface *s) {
 	this->operator =(s->raw);
 }
 
-// int Surface::box(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-// 	return boxRGBA(raw,x,y,x+w-1,y+h-1,r,g,b,a);
-// }
-
-// int Surface::box(SDL_Rect re, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-// 	return boxRGBA(raw,re.x,re.y,re.x+re.w-1,re.y+re.h-1,r,g,b,a);
-// }
-
-// int Surface::box(SDL_Rect re, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-// 	return SDL_FillRect(raw, &re, SDL_MapRGBA(format(),r,g,b,255));
-// }
-
-// int Surface::box(SDL_Rect re, uint8_t r, uint8_t g, uint8_t b) {
-// 	return SDL_FillRect(raw, &re, SDL_MapRGBA(format(),r,g,b,255));
-// }
-// int Surface::box(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t r, uint8_t g, uint8_t b) {
-// 	SDL_Rect re = {x,y,w,h};
-// 	return box(re,r,g,b);
-// }
-// int Surface::box(int16_t x, int16_t y, int16_t w, int16_t h, RGBAColor c) {
-// 	return box(x,y,w,h,c.r,c.g,c.b,c.a);
-// }
-// int Surface::box(SDL_Rect re, RGBAColor c) {
-// 	return box(re,c.r,c.g,c.b,c.a);
-// }
-
-
 void Surface::box(SDL_Rect re, RGBAColor c) {
 	if (c.a == 255) {
 		SDL_FillRect(raw, &re, c.pixelValue(raw->format));
@@ -405,32 +378,6 @@ void Surface::fillRectAlpha(SDL_Rect rect, RGBAColor c) {
 	}
 }
 
-
-
-
-
-
-// int Surface::rectangle(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-// 	return rectangleRGBA(raw,x,y,x+w-1,y+h-1,r,g,b,a);
-// }
-// int Surface::rectangle(SDL_Rect re, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-// 	return rectangleRGBA(raw,re.x,re.y,re.x+re.w-1,re.y+re.h-1,r,g,b,a);
-// }
-// int Surface::rectangle(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t r, uint8_t g, uint8_t b) {
-// 	return rectangleColor(raw, x,y,x+w-1,y+h-1, SDL_MapRGBA(format(),r,g,b,255));
-// }
-// int Surface::rectangle(SDL_Rect re, uint8_t r, uint8_t g, uint8_t b) {
-// 	return rectangleColor(raw, re.x,re.y,re.x+re.w-1,re.y+re.h-1, SDL_MapRGBA(format(),r,g,b,255));
-// }
-// int Surface::rectangle(int16_t x, int16_t y, int16_t w, int16_t h, RGBAColor c) {
-// 	return rectangle(x,y,w,h,c.r,c.g,c.b,c.a);
-// }
-// int Surface::rectangle(SDL_Rect re, RGBAColor c) {
-// 	return rectangle(re.x,re.y,re.w,re.h,c.r,c.g,c.b,c.a);
-// }
-
-
-
 void Surface::rectangle(SDL_Rect re, RGBAColor c) {
 	if (re.h >= 1) {
 		// Top.
@@ -455,87 +402,13 @@ void Surface::rectangle(SDL_Rect re, RGBAColor c) {
 	}
 }
 
-
-// int Surface::hline(int16_t x, int16_t y, int16_t w, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-// 	return box(x, y, w, 1, r, g, b, a);
-// 	// return hlineRGBA(raw,x,x+w-1,y,r,g,b,a);
-// }
-// int Surface::hline(int16_t x, int16_t y, int16_t w, RGBAColor c) {
-// 	return hline(x,y,w-1,c.r,c.g,c.b,c.a);
-// }
-
 void Surface::clearClipRect() {
 	SDL_SetClipRect(raw, NULL);
 }
 
-// void Surface::setClipRect(int x, int y, int w, int h) {
-// 	SDL_Rect rect = {x,y,w,h};
-// 	setClipRect(rect);
-// }
-
 void Surface::setClipRect(SDL_Rect rect) {
 	SDL_SetClipRect(raw, &rect);
 }
-
-
-// bool Surface::blitCenter(SDL_Surface *destination, int x, int y, int w, int h, int a) {
-// 	int oh, ow;
-// 	if (w==0) ow = halfW; else ow = min(halfW,w/2);
-// 	if (h==0) oh = halfH; else oh = min(halfH,h/2);
-// 	return blit(destination,x-ow,y-oh,w,h,a);
-// }
-// bool Surface::blitCenter(Surface *destination, int x, int y, int w, int h, int a) {
-// 	return blitCenter(destination->raw,x,y,w,h,a);
-// }
-
-// bool Surface::blitRight(SDL_Surface *destination, int x, int y, int w, int h, int a) {
-// 	if (!w) w = raw->w;
-// 	return blit(destination,x-min(raw->w,w),y,w,h,a);
-// }
-// bool Surface::blitRight(Surface *destination, int x, int y, int w, int h, int a) {
-// 	if (!w) w = raw->w;
-// 	return blitRight(destination->raw,x,y,w,h,a);
-// }
-
-
-// bool Surface::blit(Surface *destination, SDL_Rect container, const uint16_t halign, const uint16_t valign) {
-// 	switch (halign) {
-// 	case HAlignCenter:
-// 		container.x += container.w/2-halfW;
-// 		break;
-// 	case HAlignRight:
-// 		container.x += container.w-raw->w;
-// 		break;
-// 	}
-
-// 	switch (valign) {
-// 	case VAlignMiddle:
-// 		container.y += container.h/2-halfH;
-// 		break;
-// 	case VAlignBottom:
-// 		container.y += container.h-raw->h;
-// 		break;
-// 	}
-
-// 	return blit(destination,container.x,container.y);
-// }
-
-// bool Surface::blit(Surface *destination, int x, int y, int w, int h, int a) {
-// 	return blit(destination->raw,x,y,w,h,a);
-// }
-
-// bool Surface::blit(SDL_Surface *destination, int x, int y, int w, int h, int a) {
-// 	if (destination == NULL || a==0) return false;
-
-// 	SDL_Rect src = {0,0,w,h};
-// 	SDL_Rect dest;
-// 	dest.x = x;
-// 	dest.y = y;
-// 	if (a>0 && a!=raw->format->alpha)
-// 		SDL_SetAlpha(raw, SDL_SRCALPHA|SDL_RLEACCEL, a);
-// 	return SDL_BlitSurface(raw, (w==0 || h==0) ? NULL : &src, destination, &dest);
-// }
-
 
 bool Surface::blit(Surface *destination, int x, int y, const uint8_t align, uint8_t alpha) {
 	if (align & HAlignCenter) {

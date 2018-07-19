@@ -25,7 +25,6 @@ bool BrowseDialog::exec() {
 	Surface *iconFile = gmenu2x->sc.skinRes("imgs/file.png");
 
 	string path = fl->getPath();
-	// if (path.empty() || !dirExists(path) || path.compare(0,CARD_ROOT_LEN,CARD_ROOT)!=0)
 	if (path.empty() || !dirExists(path))
 		setPath(CARD_ROOT);
 
