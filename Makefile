@@ -9,7 +9,7 @@ CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
 STRIP = $(CROSS_COMPILE)strip
 
-SYSROOT     := $(CHAINPREFIX)/usr/mipsel-buildroot-linux-musl/sysroot
+SYSROOT     := $(shell $(CC) --print-sysroot)
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
