@@ -1,7 +1,6 @@
 TARGET=rs97
 
-#CHAINPREFIX=/home/anonymous/Documents/Dev/buildroot-rs97/output/host
-CHAINPREFIX=/opt/rs97-toolchain
+CHAINPREFIX=/opt/rs97-toolchain-musl
 CROSS_COMPILE=$(CHAINPREFIX)/usr/bin/mipsel-linux-
 
 BUILDTIME=$(shell date +'\"%Y-%m-%d %H:%M\"')
@@ -10,7 +9,7 @@ CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
 STRIP = $(CROSS_COMPILE)strip
 
-SYSROOT     := $(CHAINPREFIX)/usr/mipsel-buildroot-linux-uclibc/sysroot
+SYSROOT     := $(CHAINPREFIX)/usr/mipsel-buildroot-linux-musl/sysroot
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
