@@ -89,6 +89,9 @@ using std::ofstream;
 using std::stringstream;
 using namespace fastdelegate;
 
+char mount_point[64];
+char cmd_sn[256];
+
 // Note: Keep this in sync with the enum!
 static const char *colorNames[NUM_COLORS] = {
 	"topBarBg",
@@ -1776,7 +1779,7 @@ void GMenu2X::setTVOut(string TVOut) {
 }
 
 void GMenu2X::mountSd() {
-	system("sleep 1; mount -t vfat -o rw,utf8 /dev/mmcblk$(( $(readlink /dev/root | head -c -3 | tail -c1) ^ 1 ))p1 /mnt/ext_sd");
+	system("sleep 1; mount -t vfat -o rw,utf8 /dev/mmcblk1p1 /mnt/ext_sd");
 }
 
 void GMenu2X::umountSd() {
@@ -1803,14 +1806,34 @@ void GMenu2X::checkUDC() {
 		MessageBox mb(this, tr["Select USB mode:"], "skin:icons/usb.png");
 		mb.setButton(CONFIRM, tr["USB Drive"]);
 		mb.setButton(CANCEL,  tr["Charger"]);
-		if (mb.exec() == CONFIRM) {
-			system("umount -fl /dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4");
-			system("echo \"/dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4\" > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
+		if (mb.exec() == CONFIRM) 
+		{
+			if( access( "/dev/mmcblk0p4", F_OK ) != -1 ) 
+			{
+				/* Then assume external version */
+				printf("External version\n");
+				snprintf(mount_point, sizeof(mount_point), "/dev/mmcblk1p3");
+			} 
+			else 
+			{
+				/* We're using it over internal */
+				printf("Internal version\n");
+				snprintf(mount_point, sizeof(mount_point), "/dev/mmcblk0p3");
+			}
+			
+			/* This part (taken from GMenuNext) will mount the internal sd card. p3 is the partition id
+			 * It used to be p4 on older releases and 97Next.
+			 * */
+			snprintf(cmd_sn, sizeof(cmd_sn), "umount -fl %s", mount_point);
+			system(cmd_sn);
+			
+			snprintf(cmd_sn, sizeof(cmd_sn), "echo \"%s\" > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file", mount_point);
+			system(cmd_sn);
 			INFO("%s, connect USB disk for internal SD", __func__);
 
 			if (getMMCStatus() == MMC_INSERT) {
 				umountSd();
-				system("echo '/dev/mmcblk$(( $(readlink /dev/root | head -c -3 | tail -c1) ^ 1 ))p1' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
+				system("echo '/dev/mmcblk1p1 > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
 				INFO("%s, connect USB disk for external SD", __func__);
 			}
 
@@ -1828,7 +1851,13 @@ void GMenu2X::checkUDC() {
 			}
 
 			system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun0/file");
-			system("mount /dev/mmcblk$(readlink /dev/root | head -c -3 | tail -c 1)p4 /mnt/int_sd -t vfat -o rw,utf8");
+			
+			/* Note the vfat, this means that if you use ext3, you need to recompile it from source again
+			 * Maybe i could allow setting this with an argv argument ?
+			 * */
+			snprintf(cmd_sn, sizeof(cmd_sn), "mount %s /mnt/int_sd -t vfat -o rw,utf8", mount_point);
+			system(cmd_sn);
+			
 			INFO("%s, disconnect usbdisk for internal sd", __func__);
 			if (getMMCStatus() == MMC_INSERT) {
 				system("echo '' > /sys/devices/platform/musb_hdrc.0/gadget/gadget-lun1/file");
